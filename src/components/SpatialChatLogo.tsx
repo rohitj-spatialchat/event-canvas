@@ -7,7 +7,7 @@ export function SpatialChatLogo({ showText = true }: { showText?: boolean }) {
       {showText ? (
         <img src={logo} alt="SpatialChat" className="h-7" />
       ) : (
-        <img src={logoIcon} alt="SpatialChat" className="h-7 w-7 object-contain" />
+        <img src={logoIcon} alt="SpatialChat" className="h-10 w-10 object-contain" />
       )}
     </div>
   );
