@@ -48,7 +48,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <div className="flex h-14 items-center justify-center border-b border-sidebar-border px-4">
+      <div className="flex h-14 items-center justify-center px-4">
         <SpatialChatLogo showText={!collapsed} />
       </div>
       <SidebarContent>
@@ -79,7 +79,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       {/* Bottom collapse/expand toggle */}
-      <div className="mt-auto border-t border-sidebar-border p-2">
+      <div className="mt-auto p-2">
         <button
           onClick={toggleSidebar}
           className="flex h-9 w-full items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
