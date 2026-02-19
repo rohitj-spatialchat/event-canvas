@@ -1,11 +1,9 @@
 import { ChevronDown } from "lucide-react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export function AppHeader() {
   return (
     <header className="flex h-14 items-center justify-between border-b border-border bg-card px-4">
       <div className="flex items-center gap-4">
-        <SidebarTrigger />
         <button className="flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm font-medium">
           Acme Corporation
           <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
