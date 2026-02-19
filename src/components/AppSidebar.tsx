@@ -13,6 +13,7 @@ import {
   Settings,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import { SpatialChatLogo } from "@/components/SpatialChatLogo";
 import {
   Sidebar,
   SidebarContent,
@@ -45,15 +46,8 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <div className="flex h-14 items-center gap-2 border-b border-sidebar-border px-4">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-          <span className="text-sm font-bold text-primary-foreground">S</span>
-        </div>
-        {!collapsed && (
-          <span className="text-lg font-bold tracking-tight text-sidebar-foreground">
-            SpatialChat
-          </span>
-        )}
+      <div className="flex h-14 items-center justify-center border-b border-sidebar-border px-4">
+        <SpatialChatLogo showText={!collapsed} />
       </div>
       <SidebarContent>
         <SidebarGroup>

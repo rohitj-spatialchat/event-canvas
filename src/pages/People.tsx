@@ -73,7 +73,7 @@ const People = () => {
                 <th className="p-4">Event</th>
                 <th className="p-4">Status</th>
                 <th className="p-4">Engagement</th>
-                <th className="p-4">Tags</th>
+                
                 <th className="p-4">Actions</th>
               </tr>
             </thead>
@@ -114,15 +114,8 @@ const People = () => {
                         <span className="text-xs">{person.engagement}%</span>
                       </div>
                     </td>
-                    <td className="p-4">
-                      <div className="flex gap-1">
-                        {person.tags.length > 0 ? person.tags.map(tag => (
-                          <Badge key={tag} variant="outline" className={`text-xs ${tag === "VIP" ? "border-primary text-primary" : tag === "Speaker" ? "border-success text-success" : "border-warning text-warning"}`}>
-                            {tag}
-                          </Badge>
-                        )) : <span className="text-xs text-muted-foreground">—</span>}
-                      </div>
-                    </td>
+
+
                     <td className="p-4">
                       <div className="flex items-center gap-2">
                         <button className="text-muted-foreground hover:text-foreground">
