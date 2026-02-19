@@ -11,6 +11,8 @@ import {
   Globe,
   Plug,
   Settings,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { SpatialChatLogo } from "@/components/SpatialChatLogo";
@@ -41,7 +43,7 @@ const navItems = [
 ];
 
 export function AppSidebar() {
-  const { state } = useSidebar();
+  const { state, toggleSidebar } = useSidebar();
   const collapsed = state === "collapsed";
 
   return (
@@ -75,6 +77,20 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      {/* Bottom collapse/expand toggle */}
+      <div className="mt-auto border-t border-sidebar-border p-2">
+        <button
+          onClick={toggleSidebar}
+          className="flex h-9 w-full items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        >
+          {collapsed ? (
+            <ChevronRight className="h-5 w-5" />
+          ) : (
+            <ChevronLeft className="h-5 w-5" />
+          )}
+        </button>
+      </div>
     </Sidebar>
   );
 }
