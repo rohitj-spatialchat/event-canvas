@@ -1,175 +1,105 @@
-import {
-  FileEdit,
-  CalendarClock,
-  Radio,
-  CheckCircle2,
-  Plus,
-  Send,
-  BarChart3,
-  Users,
-  TrendingUp,
-  TrendingDown,
-  Clock,
-  ClipboardList,
-  Zap,
-  Plug,
-  Video,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowRight, Filter, Plus, Users, CalendarDays, Zap, DollarSign } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  eventStatusCounts,
-  keyMetrics,
-  upcomingEvents,
-  recentActivity,
-} from "@/data/mockData";
+import { homeMetrics, upcomingEvents, recentActivity } from "@/data/mockData";
 
-const statusConfig = {
-  draft: { label: "Draft", icon: FileEdit, color: "bg-muted text-muted-foreground" },
-  scheduled: { label: "Scheduled", icon: CalendarClock, color: "bg-info/10 text-info" },
-  live: { label: "Live", icon: Radio, color: "bg-success/10 text-success" },
-  ended: { label: "Ended", icon: CheckCircle2, color: "bg-muted text-muted-foreground" },
-};
-
-const activityIcons: Record<string, React.ElementType> = {
-  registration: Users,
-  engagement: Zap,
-  setup: ClipboardList,
-  recording: Video,
-  integration: Plug,
+const activityIcons: Record<string, string> = {
+  registration: "👤",
+  event: "📅",
+  revenue: "💰",
+  engagement: "⚡",
 };
 
 const Index = () => {
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">
-          Welcome back! Here's your event overview.
-        </p>
+      {/* Action buttons */}
+      <div className="flex items-center gap-3">
+        <Button variant="outline" className="gap-2">
+          <Filter className="h-4 w-4" /> Filter
+        </Button>
+        <Button className="gap-2">
+          <Plus className="h-4 w-4" /> Create Event
+        </Button>
       </div>
 
-      {/* Event Status Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {(Object.entries(eventStatusCounts) as [keyof typeof statusConfig, number][]).map(
-          ([status, count]) => {
-            const config = statusConfig[status];
-            const Icon = config.icon;
-            return (
-              <Card key={status}>
-                <CardContent className="flex items-center gap-4 p-5">
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${config.color}`}>
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold">{count}</p>
-                    <p className="text-xs text-muted-foreground">{config.label}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          }
-        )}
+      {/* Banner */}
+      <div className="flex items-center justify-between rounded-lg bg-primary px-6 py-3">
+        <div className="flex items-center gap-2 text-primary-foreground">
+          <span>🚀</span>
+          <span className="font-semibold">Launch Your Live Space</span>
+          <span className="text-primary-foreground/80">Start hosting immersive virtual events</span>
+        </div>
+        <Button variant="secondary" size="sm" className="gap-1.5">
+          Go to My Space <ArrowRight className="h-4 w-4" />
+        </Button>
       </div>
 
-      {/* Key Metrics */}
+      {/* Metric Cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {keyMetrics.map((metric) => (
-          <Card key={metric.label}>
-            <CardContent className="p-5">
-              <p className="text-xs font-medium text-muted-foreground">{metric.label}</p>
-              <div className="mt-1 flex items-baseline gap-2">
-                <span className="text-2xl font-bold">{metric.value}</span>
-                <span
-                  className={`flex items-center text-xs font-medium ${
-                    metric.positive ? "text-success" : "text-destructive"
-                  }`}
-                >
-                  {metric.positive ? (
-                    <TrendingUp className="mr-0.5 h-3 w-3" />
-                  ) : (
-                    <TrendingDown className="mr-0.5 h-3 w-3" />
-                  )}
-                  {metric.change}
+        {homeMetrics.map((metric, i) => (
+          <Card key={i}>
+            <CardContent className="flex items-center gap-4 p-5">
+              <div
+                className="flex h-12 w-12 items-center justify-center rounded-lg"
+                style={{ backgroundColor: metric.color }}
+              >
+                <span className="text-sm text-white">
+                  {i === 0 && <CalendarDays className="h-5 w-5" />}
+                  {i === 1 && <Users className="h-5 w-5" />}
+                  {i === 2 && <Zap className="h-5 w-5" />}
+                  {i === 3 && <DollarSign className="h-5 w-5" />}
                 </span>
               </div>
+              <span className="text-3xl font-bold">{metric.value}</span>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Quick Actions */}
-      <div className="flex flex-wrap gap-3">
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" /> Create Room
-        </Button>
-        <Button variant="outline" className="gap-2">
-          <Send className="h-4 w-4" /> Send Reminder
-        </Button>
-        <Button variant="outline" className="gap-2">
-          <BarChart3 className="h-4 w-4" /> Launch Poll
-        </Button>
-      </div>
-
-      {/* Bottom Grid: Upcoming Events + Activity Feed */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      {/* Bottom: Events + Activity */}
+      <div className="grid gap-6 lg:grid-cols-[1fr_400px]">
         {/* Upcoming Events */}
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">Upcoming Events</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {upcomingEvents.map((event) => {
-              const config = statusConfig[event.status];
-              return (
-                <div
-                  key={event.id}
-                  className="flex items-center justify-between rounded-lg border border-border p-3"
-                >
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{event.name}</p>
-                    <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
-                      <Clock className="h-3 w-3" />
-                      {event.date}
-                      {event.attendees > 0 && (
-                        <>
-                          <span>·</span>
-                          <Users className="h-3 w-3" />
-                          {event.attendees}
-                        </>
-                      )}
+          <CardContent className="divide-y divide-border p-0">
+            {upcomingEvents.map((event) => (
+              <div key={event.id} className="flex items-center justify-between p-4">
+                <div className="flex items-center gap-4">
+                  <div className="flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                    <span className="text-lg font-bold leading-none">{event.date}</span>
+                    <span className="text-[10px] uppercase">{event.month}</span>
+                  </div>
+                  <div>
+                    <p className="font-medium">{event.name}</p>
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <span>🕐 {event.time}</span>
+                      <span>👤 {event.registered} registered</span>
                     </div>
                   </div>
-                  <Badge variant="secondary" className={`ml-2 ${config.color} border-0`}>
-                    {config.label}
-                  </Badge>
                 </div>
-              );
-            })}
+                <div className="text-right">
+                  <p className="font-semibold text-success">{event.revenue}</p>
+                  <span className="text-xs font-medium text-muted-foreground">{event.status}</span>
+                </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
         {/* Recent Activity */}
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">Recent Activity</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {recentActivity.map((activity) => {
-              const Icon = activityIcons[activity.type] || Zap;
-              return (
-                <div key={activity.id} className="flex gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
-                    <Icon className="h-3.5 w-3.5 text-muted-foreground" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm">{activity.text}</p>
-                    <p className="text-xs text-muted-foreground">{activity.time}</p>
-                  </div>
+          <CardContent className="divide-y divide-border p-0">
+            {recentActivity.map((activity) => (
+              <div key={activity.id} className="flex items-start gap-3 p-4">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted text-lg">
+                  {activityIcons[activity.icon] || "📌"}
                 </div>
-              );
-            })}
+                <div>
+                  <p className="text-sm">{activity.text}</p>
+                  <p className="text-xs text-muted-foreground">{activity.time}</p>
+                </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
       </div>
