@@ -19,7 +19,32 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { CalendarDays, Clock, MapPin, Users, DollarSign, CheckCircle2 } from "lucide-react";
+import {
+  CalendarDays,
+  Clock,
+  MapPin,
+  Users,
+  DollarSign,
+  CheckCircle2,
+  Video,
+  Globe,
+  Presentation,
+  Handshake,
+  BookOpen,
+  Mic,
+  GripVertical,
+  Plus,
+  Trash2,
+  Type,
+  Mail,
+  Phone,
+  AlignLeft,
+  List,
+  ToggleLeft,
+  FileText,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { toast } from "sonner";
 
 interface CreateEventDialogProps {
@@ -28,13 +53,90 @@ interface CreateEventDialogProps {
 }
 
 const steps = [
-  { id: 1, label: "Details", icon: CalendarDays },
-  { id: 2, label: "Schedule", icon: Clock },
-  { id: 3, label: "Tickets", icon: DollarSign },
-  { id: 4, label: "Review", icon: CheckCircle2 },
+  { id: 1, label: "Type", icon: Globe },
+  { id: 2, label: "Details", icon: CalendarDays },
+  { id: 3, label: "Schedule", icon: Clock },
+  { id: 4, label: "Tickets", icon: DollarSign },
+  { id: 5, label: "Registration", icon: FileText },
+  { id: 6, label: "Review", icon: CheckCircle2 },
 ];
 
-const eventTypes = ["Webinar", "Conference", "Workshop", "Meeting", "Internal", "Networking"];
+const eventTypeOptions = [
+  {
+    id: "webinar",
+    label: "Webinar",
+    description: "Host a live presentation with Q&A, polls, and screen sharing for large audiences",
+    icon: Video,
+    features: ["Screen sharing", "Live Q&A", "Polls", "Recording"],
+    color: "hsl(235, 65%, 55%)",
+  },
+  {
+    id: "virtual-networking",
+    label: "Virtual Networking",
+    description: "Create spatial rooms where attendees can move around and have spontaneous conversations",
+    icon: Handshake,
+    features: ["Breakout rooms", "1:1 video", "Spatial audio", "Speed networking"],
+    color: "hsl(152, 55%, 45%)",
+  },
+  {
+    id: "conference",
+    label: "Conference",
+    description: "Multi-session event with keynotes, breakout tracks, and an expo hall",
+    icon: Presentation,
+    features: ["Multi-track", "Expo hall", "Keynotes", "Sponsor booths"],
+    color: "hsl(38, 92%, 50%)",
+  },
+  {
+    id: "workshop",
+    label: "Workshop",
+    description: "Hands-on interactive session with collaboration tools and small group activities",
+    icon: BookOpen,
+    features: ["Collaboration", "Whiteboards", "Breakout groups", "Hands-on"],
+    color: "hsl(0, 72%, 55%)",
+  },
+  {
+    id: "meeting",
+    label: "Team Meeting",
+    description: "Internal meeting space with agenda tracking, notes, and action items",
+    icon: Users,
+    features: ["Agenda", "Meeting notes", "Action items", "Screen share"],
+    color: "hsl(270, 55%, 55%)",
+  },
+  {
+    id: "hybrid",
+    label: "Hybrid Event",
+    description: "Combine in-person and virtual attendees with synchronized experiences",
+    icon: Mic,
+    features: ["In-person + virtual", "Live stream", "Chat", "Networking"],
+    color: "hsl(195, 65%, 45%)",
+  },
+];
+
+// Registration form field types
+const fieldTypes = [
+  { id: "text", label: "Text", icon: Type },
+  { id: "email", label: "Email", icon: Mail },
+  { id: "phone", label: "Phone", icon: Phone },
+  { id: "textarea", label: "Long Text", icon: AlignLeft },
+  { id: "select", label: "Dropdown", icon: List },
+  { id: "checkbox", label: "Checkbox", icon: ToggleLeft },
+];
+
+interface FormField {
+  id: string;
+  type: string;
+  label: string;
+  placeholder: string;
+  required: boolean;
+  options?: string[]; // for select type
+}
+
+const defaultFields: FormField[] = [
+  { id: "f1", type: "text", label: "Full Name", placeholder: "Enter your full name", required: true },
+  { id: "f2", type: "email", label: "Email Address", placeholder: "you@example.com", required: true },
+  { id: "f3", type: "text", label: "Company", placeholder: "Your company name", required: false },
+  { id: "f4", type: "text", label: "Job Title", placeholder: "Your role", required: false },
+];
 
 export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps) {
   const [step, setStep] = useState(1);
@@ -52,20 +154,26 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     ticketPrice: "",
     requireApproval: false,
   });
+  const [regFields, setRegFields] = useState<FormField[]>(defaultFields);
+  const [addingField, setAddingField] = useState(false);
 
   const update = (field: string, value: string | boolean) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
+  const selectedType = eventTypeOptions.find((t) => t.id === form.type);
+
   const canNext = () => {
-    if (step === 1) return form.name.trim() && form.type;
-    if (step === 2) return form.date && form.startTime;
-    if (step === 3) return form.capacity && (form.ticketType === "free" || form.ticketPrice);
+    if (step === 1) return !!form.type;
+    if (step === 2) return form.name.trim().length > 0;
+    if (step === 3) return form.date && form.startTime;
+    if (step === 4) return form.capacity && (form.ticketType === "free" || form.ticketPrice);
+    if (step === 5) return regFields.length > 0;
     return true;
   };
 
   const handleSubmit = () => {
     toast.success("Event created successfully!", {
-      description: `"${form.name}" has been created.`,
+      description: `"${form.name}" has been created with ${regFields.length} registration fields.`,
     });
     onOpenChange(false);
     setStep(1);
@@ -83,27 +191,72 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       ticketPrice: "",
       requireApproval: false,
     });
+    setRegFields(defaultFields);
+  };
+
+  // Registration form builder helpers
+  const addField = (type: string) => {
+    const fieldType = fieldTypes.find((f) => f.id === type);
+    const newField: FormField = {
+      id: `f${Date.now()}`,
+      type,
+      label: fieldType?.label || "New Field",
+      placeholder: "",
+      required: false,
+      ...(type === "select" ? { options: ["Option 1", "Option 2"] } : {}),
+    };
+    setRegFields((prev) => [...prev, newField]);
+    setAddingField(false);
+  };
+
+  const updateField = (id: string, updates: Partial<FormField>) => {
+    setRegFields((prev) =>
+      prev.map((f) => (f.id === id ? { ...f, ...updates } : f))
+    );
+  };
+
+  const removeField = (id: string) => {
+    setRegFields((prev) => prev.filter((f) => f.id !== id));
+  };
+
+  const moveField = (id: string, direction: "up" | "down") => {
+    setRegFields((prev) => {
+      const idx = prev.findIndex((f) => f.id === id);
+      if ((direction === "up" && idx === 0) || (direction === "down" && idx === prev.length - 1))
+        return prev;
+      const newFields = [...prev];
+      const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+      [newFields[idx], newFields[swapIdx]] = [newFields[swapIdx], newFields[idx]];
+      return newFields;
+    });
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 gap-0">
-        <DialogHeader className="p-6 pb-4">
+      <DialogContent className="max-w-2xl p-0 gap-0 max-h-[90vh] flex flex-col">
+        <DialogHeader className="p-6 pb-4 shrink-0">
           <DialogTitle className="text-xl">Create New Event</DialogTitle>
-          <DialogDescription>Fill in the details to create your event.</DialogDescription>
+          <DialogDescription>
+            {step === 1 && "Choose the type of event you want to create."}
+            {step === 2 && "Fill in the basic event details."}
+            {step === 3 && "Set the date and time for your event."}
+            {step === 4 && "Configure tickets and capacity."}
+            {step === 5 && "Build your registration form."}
+            {step === 6 && "Review everything before creating."}
+          </DialogDescription>
         </DialogHeader>
 
         {/* Step indicator */}
-        <div className="flex items-center gap-1 px-6 pb-4">
+        <div className="flex items-center gap-1 px-6 pb-4 shrink-0 overflow-x-auto">
           {steps.map((s, i) => {
             const Icon = s.icon;
             const isActive = step === s.id;
             const isDone = step > s.id;
             return (
-              <div key={s.id} className="flex items-center gap-1 flex-1">
+              <div key={s.id} className="flex items-center gap-1 flex-1 min-w-0">
                 <button
                   onClick={() => s.id < step && setStep(s.id)}
-                  className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                  className={`flex items-center gap-1 rounded-full px-2.5 py-1.5 text-xs font-medium transition-colors whitespace-nowrap ${
                     isActive
                       ? "bg-primary text-primary-foreground"
                       : isDone
@@ -111,66 +264,120 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
                       : "bg-muted text-muted-foreground"
                   }`}
                 >
-                  <Icon className="h-3.5 w-3.5" />
-                  {s.label}
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
+                  <span className="hidden sm:inline">{s.label}</span>
                 </button>
                 {i < steps.length - 1 && (
-                  <div className={`h-px flex-1 ${isDone ? "bg-primary" : "bg-border"}`} />
+                  <div className={`h-px flex-1 min-w-2 ${isDone ? "bg-primary" : "bg-border"}`} />
                 )}
               </div>
             );
           })}
         </div>
 
-        <div className="border-t px-6 py-5 min-h-[320px]">
-          {/* Step 1: Details */}
+        <div className="border-t px-6 py-5 min-h-[320px] overflow-y-auto flex-1">
+          {/* Step 1: Event Type */}
           {step === 1 && (
+            <div className="grid gap-3 sm:grid-cols-2">
+              {eventTypeOptions.map((type) => {
+                const Icon = type.icon;
+                const isSelected = form.type === type.id;
+                return (
+                  <button
+                    key={type.id}
+                    onClick={() => update("type", type.id)}
+                    className={`group relative rounded-xl border-2 p-4 text-left transition-all ${
+                      isSelected
+                        ? "border-primary bg-primary/5 ring-1 ring-primary/20"
+                        : "border-border hover:border-primary/40 hover:bg-muted/50"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white"
+                        style={{ backgroundColor: type.color }}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-sm">{type.label}</p>
+                        <p className="mt-0.5 text-xs text-muted-foreground leading-relaxed">
+                          {type.description}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-3 flex flex-wrap gap-1">
+                      {type.features.map((f) => (
+                        <span
+                          key={f}
+                          className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
+                        >
+                          {f}
+                        </span>
+                      ))}
+                    </div>
+                    {isSelected && (
+                      <div className="absolute right-3 top-3">
+                        <CheckCircle2 className="h-5 w-5 text-primary" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Step 2: Details */}
+          {step === 2 && (
             <div className="space-y-4">
+              {selectedType && (
+                <div className="flex items-center gap-2 rounded-lg bg-muted/50 p-3 mb-4">
+                  <div
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-white"
+                    style={{ backgroundColor: selectedType.color }}
+                  >
+                    <selectedType.icon className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">{selectedType.label}</p>
+                    <p className="text-xs text-muted-foreground">Event type selected</p>
+                  </div>
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="name">Event Name *</Label>
                 <Input
                   id="name"
-                  placeholder="e.g. Product Launch Webinar"
+                  placeholder={
+                    form.type === "webinar"
+                      ? "e.g. Product Launch Webinar"
+                      : form.type === "virtual-networking"
+                      ? "e.g. Startup Founders Mixer"
+                      : "e.g. Annual Conference 2026"
+                  }
                   value={form.name}
                   onChange={(e) => update("name", e.target.value)}
                   maxLength={100}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Event Type *</Label>
-                  <Select value={form.type} onValueChange={(v) => update("type", v)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {eventTypes.map((t) => (
-                        <SelectItem key={t} value={t.toLowerCase()}>
-                          {t}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Location</Label>
-                  <Select value={form.location} onValueChange={(v) => update("location", v)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="virtual">
-                        <span className="flex items-center gap-1.5">🌐 Virtual</span>
-                      </SelectItem>
-                      <SelectItem value="in-person">
-                        <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> In-Person</span>
-                      </SelectItem>
-                      <SelectItem value="hybrid">
-                        <span className="flex items-center gap-1.5">🔄 Hybrid</span>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="space-y-2">
+                <Label>Location</Label>
+                <Select value={form.location} onValueChange={(v) => update("location", v)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="virtual">
+                      <span className="flex items-center gap-1.5">🌐 Virtual</span>
+                    </SelectItem>
+                    <SelectItem value="in-person">
+                      <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> In-Person</span>
+                    </SelectItem>
+                    <SelectItem value="hybrid">
+                      <span className="flex items-center gap-1.5">🔄 Hybrid</span>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
@@ -187,8 +394,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
             </div>
           )}
 
-          {/* Step 2: Schedule */}
-          {step === 2 && (
+          {/* Step 3: Schedule */}
+          {step === 3 && (
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="date">Event Date *</Label>
@@ -238,8 +445,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
             </div>
           )}
 
-          {/* Step 3: Tickets */}
-          {step === 3 && (
+          {/* Step 4: Tickets */}
+          {step === 4 && (
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="capacity">Capacity *</Label>
@@ -306,13 +513,171 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
             </div>
           )}
 
-          {/* Step 4: Review */}
-          {step === 4 && (
+          {/* Step 5: Registration Form Builder */}
+          {step === 5 && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-semibold">Form Fields</h3>
+                  <p className="text-xs text-muted-foreground">{regFields.length} fields configured</p>
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-1.5"
+                  onClick={() => setAddingField(!addingField)}
+                >
+                  <Plus className="h-3.5 w-3.5" /> Add Field
+                </Button>
+              </div>
+
+              {/* Add field picker */}
+              {addingField && (
+                <div className="rounded-lg border bg-muted/30 p-3">
+                  <p className="text-xs font-medium text-muted-foreground mb-2">Choose field type</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {fieldTypes.map((ft) => {
+                      const Icon = ft.icon;
+                      return (
+                        <button
+                          key={ft.id}
+                          onClick={() => addField(ft.id)}
+                          className="flex items-center gap-2 rounded-md border bg-card p-2.5 text-xs font-medium hover:border-primary hover:bg-primary/5 transition-colors"
+                        >
+                          <Icon className="h-3.5 w-3.5 text-muted-foreground" />
+                          {ft.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Field list */}
+              <div className="space-y-2">
+                {regFields.map((field, idx) => {
+                  const FieldIcon = fieldTypes.find((ft) => ft.id === field.type)?.icon || Type;
+                  return (
+                    <div
+                      key={field.id}
+                      className="group rounded-lg border bg-card p-3 transition-colors hover:border-primary/30"
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="flex flex-col gap-0.5">
+                          <button
+                            onClick={() => moveField(field.id, "up")}
+                            disabled={idx === 0}
+                            className="text-muted-foreground hover:text-foreground disabled:opacity-30"
+                          >
+                            <ChevronUp className="h-3 w-3" />
+                          </button>
+                          <button
+                            onClick={() => moveField(field.id, "down")}
+                            disabled={idx === regFields.length - 1}
+                            className="text-muted-foreground hover:text-foreground disabled:opacity-30"
+                          >
+                            <ChevronDown className="h-3 w-3" />
+                          </button>
+                        </div>
+                        <GripVertical className="h-4 w-4 text-muted-foreground/50 shrink-0" />
+                        <FieldIcon className="h-4 w-4 text-muted-foreground shrink-0" />
+                        <Input
+                          value={field.label}
+                          onChange={(e) => updateField(field.id, { label: e.target.value })}
+                          className="h-8 text-sm font-medium flex-1"
+                          maxLength={50}
+                        />
+                        <Badge variant="outline" className="text-[10px] shrink-0 capitalize">
+                          {field.type}
+                        </Badge>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => updateField(field.id, { required: !field.required })}
+                            className={`rounded px-1.5 py-0.5 text-[10px] font-medium transition-colors ${
+                              field.required
+                                ? "bg-primary/10 text-primary"
+                                : "bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                            }`}
+                          >
+                            {field.required ? "Required" : "Optional"}
+                          </button>
+                          <button
+                            onClick={() => removeField(field.id)}
+                            className="p-1 text-muted-foreground hover:text-destructive transition-colors"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                      {field.type === "select" && field.options && (
+                        <div className="mt-2 ml-12 space-y-1">
+                          {field.options.map((opt, oi) => (
+                            <div key={oi} className="flex items-center gap-2">
+                              <span className="text-xs text-muted-foreground w-4">{oi + 1}.</span>
+                              <Input
+                                value={opt}
+                                onChange={(e) => {
+                                  const newOpts = [...(field.options || [])];
+                                  newOpts[oi] = e.target.value;
+                                  updateField(field.id, { options: newOpts });
+                                }}
+                                className="h-7 text-xs flex-1"
+                                maxLength={50}
+                              />
+                              <button
+                                onClick={() => {
+                                  const newOpts = (field.options || []).filter((_, i) => i !== oi);
+                                  updateField(field.id, { options: newOpts });
+                                }}
+                                className="text-muted-foreground hover:text-destructive"
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </button>
+                            </div>
+                          ))}
+                          <button
+                            onClick={() => {
+                              const newOpts = [...(field.options || []), `Option ${(field.options?.length || 0) + 1}`];
+                              updateField(field.id, { options: newOpts });
+                            }}
+                            className="text-xs text-primary hover:underline ml-6"
+                          >
+                            + Add option
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {regFields.length === 0 && (
+                <div className="rounded-lg border-2 border-dashed p-8 text-center">
+                  <FileText className="mx-auto h-8 w-8 text-muted-foreground/50" />
+                  <p className="mt-2 text-sm text-muted-foreground">No fields added yet</p>
+                  <p className="text-xs text-muted-foreground">Click "Add Field" to start building your form</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Step 6: Review */}
+          {step === 6 && (
             <div className="space-y-4">
               <div className="rounded-lg border p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-lg">{form.name || "Untitled Event"}</h3>
-                  <Badge variant="secondary" className="capitalize">{form.type || "—"}</Badge>
+                  <div className="flex items-center gap-2">
+                    {selectedType && (
+                      <div
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-white"
+                        style={{ backgroundColor: selectedType.color }}
+                      >
+                        <selectedType.icon className="h-4 w-4" />
+                      </div>
+                    )}
+                    <h3 className="font-semibold text-lg">{form.name || "Untitled Event"}</h3>
+                  </div>
+                  <Badge variant="secondary" className="capitalize">{selectedType?.label || "—"}</Badge>
                 </div>
                 {form.description && (
                   <p className="text-sm text-muted-foreground">{form.description}</p>
@@ -338,6 +703,38 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
                     <DollarSign className="h-4 w-4" />
                     <span>{form.ticketType === "free" ? "Free" : `$${form.ticketPrice}`}</span>
                   </div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <FileText className="h-4 w-4" />
+                    <span>{regFields.length} registration fields</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Registration form preview */}
+              <div className="rounded-lg border p-4">
+                <h4 className="text-sm font-semibold mb-3">Registration Form Preview</h4>
+                <div className="space-y-3">
+                  {regFields.map((field) => (
+                    <div key={field.id} className="space-y-1">
+                      <label className="text-xs font-medium text-muted-foreground">
+                        {field.label} {field.required && <span className="text-destructive">*</span>}
+                      </label>
+                      {field.type === "textarea" ? (
+                        <div className="h-16 rounded-md border bg-muted/30" />
+                      ) : field.type === "select" ? (
+                        <div className="flex h-9 items-center rounded-md border bg-muted/30 px-3 text-xs text-muted-foreground">
+                          Select {field.label.toLowerCase()}...
+                        </div>
+                      ) : field.type === "checkbox" ? (
+                        <div className="flex items-center gap-2">
+                          <div className="h-4 w-4 rounded border bg-muted/30" />
+                          <span className="text-xs text-muted-foreground">{field.label}</span>
+                        </div>
+                      ) : (
+                        <div className="h-9 rounded-md border bg-muted/30" />
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -345,7 +742,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t px-6 py-4">
+        <div className="flex items-center justify-between border-t px-6 py-4 shrink-0">
           <Button
             variant="outline"
             onClick={() => (step === 1 ? onOpenChange(false) : setStep(step - 1))}
@@ -354,7 +751,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
           </Button>
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted-foreground">Step {step} of {steps.length}</span>
-            {step < 4 ? (
+            {step < 6 ? (
               <Button onClick={() => setStep(step + 1)} disabled={!canNext()}>
                 Next
               </Button>
