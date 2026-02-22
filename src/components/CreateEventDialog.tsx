@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
+import { RegistrationPageBuilder, FormField } from "@/components/RegistrationPageBuilder";
 import {
   CalendarDays,
   Clock,
@@ -32,18 +33,7 @@ import {
   Handshake,
   BookOpen,
   Mic,
-  GripVertical,
-  Plus,
-  Trash2,
-  Type,
-  Mail,
-  Phone,
-  AlignLeft,
-  List,
-  ToggleLeft,
   FileText,
-  ChevronDown,
-  ChevronUp,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -112,25 +102,6 @@ const eventTypeOptions = [
   },
 ];
 
-// Registration form field types
-const fieldTypes = [
-  { id: "text", label: "Text", icon: Type },
-  { id: "email", label: "Email", icon: Mail },
-  { id: "phone", label: "Phone", icon: Phone },
-  { id: "textarea", label: "Long Text", icon: AlignLeft },
-  { id: "select", label: "Dropdown", icon: List },
-  { id: "checkbox", label: "Checkbox", icon: ToggleLeft },
-];
-
-interface FormField {
-  id: string;
-  type: string;
-  label: string;
-  placeholder: string;
-  required: boolean;
-  options?: string[]; // for select type
-}
-
 const defaultFields: FormField[] = [
   { id: "f1", type: "text", label: "Full Name", placeholder: "Enter your full name", required: true },
   { id: "f2", type: "email", label: "Email Address", placeholder: "you@example.com", required: true },
@@ -155,7 +126,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     requireApproval: false,
   });
   const [regFields, setRegFields] = useState<FormField[]>(defaultFields);
-  const [addingField, setAddingField] = useState(false);
+  
 
   const update = (field: string, value: string | boolean) =>
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -191,49 +162,13 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       ticketPrice: "",
       requireApproval: false,
     });
-    setRegFields(defaultFields);
+    setRegFields([...defaultFields]);
   };
 
-  // Registration form builder helpers
-  const addField = (type: string) => {
-    const fieldType = fieldTypes.find((f) => f.id === type);
-    const newField: FormField = {
-      id: `f${Date.now()}`,
-      type,
-      label: fieldType?.label || "New Field",
-      placeholder: "",
-      required: false,
-      ...(type === "select" ? { options: ["Option 1", "Option 2"] } : {}),
-    };
-    setRegFields((prev) => [...prev, newField]);
-    setAddingField(false);
-  };
-
-  const updateField = (id: string, updates: Partial<FormField>) => {
-    setRegFields((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, ...updates } : f))
-    );
-  };
-
-  const removeField = (id: string) => {
-    setRegFields((prev) => prev.filter((f) => f.id !== id));
-  };
-
-  const moveField = (id: string, direction: "up" | "down") => {
-    setRegFields((prev) => {
-      const idx = prev.findIndex((f) => f.id === id);
-      if ((direction === "up" && idx === 0) || (direction === "down" && idx === prev.length - 1))
-        return prev;
-      const newFields = [...prev];
-      const swapIdx = direction === "up" ? idx - 1 : idx + 1;
-      [newFields[idx], newFields[swapIdx]] = [newFields[swapIdx], newFields[idx]];
-      return newFields;
-    });
-  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 gap-0 max-h-[90vh] flex flex-col">
+      <DialogContent className={`p-0 gap-0 max-h-[90vh] flex flex-col ${step === 5 ? "max-w-5xl" : "max-w-2xl"}`}>
         <DialogHeader className="p-6 pb-4 shrink-0">
           <DialogTitle className="text-xl">Create New Event</DialogTitle>
           <DialogDescription>
@@ -513,152 +448,9 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
             </div>
           )}
 
-          {/* Step 5: Registration Form Builder */}
+          {/* Step 5: Registration Page Builder */}
           {step === 5 && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-semibold">Form Fields</h3>
-                  <p className="text-xs text-muted-foreground">{regFields.length} fields configured</p>
-                </div>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="gap-1.5"
-                  onClick={() => setAddingField(!addingField)}
-                >
-                  <Plus className="h-3.5 w-3.5" /> Add Field
-                </Button>
-              </div>
-
-              {/* Add field picker */}
-              {addingField && (
-                <div className="rounded-lg border bg-muted/30 p-3">
-                  <p className="text-xs font-medium text-muted-foreground mb-2">Choose field type</p>
-                  <div className="grid grid-cols-3 gap-2">
-                    {fieldTypes.map((ft) => {
-                      const Icon = ft.icon;
-                      return (
-                        <button
-                          key={ft.id}
-                          onClick={() => addField(ft.id)}
-                          className="flex items-center gap-2 rounded-md border bg-card p-2.5 text-xs font-medium hover:border-primary hover:bg-primary/5 transition-colors"
-                        >
-                          <Icon className="h-3.5 w-3.5 text-muted-foreground" />
-                          {ft.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-              {/* Field list */}
-              <div className="space-y-2">
-                {regFields.map((field, idx) => {
-                  const FieldIcon = fieldTypes.find((ft) => ft.id === field.type)?.icon || Type;
-                  return (
-                    <div
-                      key={field.id}
-                      className="group rounded-lg border bg-card p-3 transition-colors hover:border-primary/30"
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="flex flex-col gap-0.5">
-                          <button
-                            onClick={() => moveField(field.id, "up")}
-                            disabled={idx === 0}
-                            className="text-muted-foreground hover:text-foreground disabled:opacity-30"
-                          >
-                            <ChevronUp className="h-3 w-3" />
-                          </button>
-                          <button
-                            onClick={() => moveField(field.id, "down")}
-                            disabled={idx === regFields.length - 1}
-                            className="text-muted-foreground hover:text-foreground disabled:opacity-30"
-                          >
-                            <ChevronDown className="h-3 w-3" />
-                          </button>
-                        </div>
-                        <GripVertical className="h-4 w-4 text-muted-foreground/50 shrink-0" />
-                        <FieldIcon className="h-4 w-4 text-muted-foreground shrink-0" />
-                        <Input
-                          value={field.label}
-                          onChange={(e) => updateField(field.id, { label: e.target.value })}
-                          className="h-8 text-sm font-medium flex-1"
-                          maxLength={50}
-                        />
-                        <Badge variant="outline" className="text-[10px] shrink-0 capitalize">
-                          {field.type}
-                        </Badge>
-                        <div className="flex items-center gap-1">
-                          <button
-                            onClick={() => updateField(field.id, { required: !field.required })}
-                            className={`rounded px-1.5 py-0.5 text-[10px] font-medium transition-colors ${
-                              field.required
-                                ? "bg-primary/10 text-primary"
-                                : "bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                            }`}
-                          >
-                            {field.required ? "Required" : "Optional"}
-                          </button>
-                          <button
-                            onClick={() => removeField(field.id)}
-                            className="p-1 text-muted-foreground hover:text-destructive transition-colors"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
-                      </div>
-                      {field.type === "select" && field.options && (
-                        <div className="mt-2 ml-12 space-y-1">
-                          {field.options.map((opt, oi) => (
-                            <div key={oi} className="flex items-center gap-2">
-                              <span className="text-xs text-muted-foreground w-4">{oi + 1}.</span>
-                              <Input
-                                value={opt}
-                                onChange={(e) => {
-                                  const newOpts = [...(field.options || [])];
-                                  newOpts[oi] = e.target.value;
-                                  updateField(field.id, { options: newOpts });
-                                }}
-                                className="h-7 text-xs flex-1"
-                                maxLength={50}
-                              />
-                              <button
-                                onClick={() => {
-                                  const newOpts = (field.options || []).filter((_, i) => i !== oi);
-                                  updateField(field.id, { options: newOpts });
-                                }}
-                                className="text-muted-foreground hover:text-destructive"
-                              >
-                                <Trash2 className="h-3 w-3" />
-                              </button>
-                            </div>
-                          ))}
-                          <button
-                            onClick={() => {
-                              const newOpts = [...(field.options || []), `Option ${(field.options?.length || 0) + 1}`];
-                              updateField(field.id, { options: newOpts });
-                            }}
-                            className="text-xs text-primary hover:underline ml-6"
-                          >
-                            + Add option
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {regFields.length === 0 && (
-                <div className="rounded-lg border-2 border-dashed p-8 text-center">
-                  <FileText className="mx-auto h-8 w-8 text-muted-foreground/50" />
-                  <p className="mt-2 text-sm text-muted-foreground">No fields added yet</p>
-                  <p className="text-xs text-muted-foreground">Click "Add Field" to start building your form</p>
-                </div>
-              )}
-            </div>
+            <RegistrationPageBuilder regFields={regFields} setRegFields={setRegFields} />
           )}
 
           {/* Step 6: Review */}
