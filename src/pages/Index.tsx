@@ -60,6 +60,15 @@ const activityIcons: Record<string, string> = {
 
 const pieColors = ["hsl(235, 65%, 55%)", "hsl(152, 55%, 45%)", "hsl(38, 92%, 50%)", "hsl(0, 72%, 55%)"];
 
+const platformData = [
+  { name: "Windows", value: 50.8 },
+  { name: "MacOS", value: 42.2 },
+  { name: "Linux", value: 2.7 },
+  { name: "iOS", value: 2.3 },
+  { name: "Android", value: 1.9 },
+];
+const platformColors = ["hsl(200, 85%, 55%)", "hsl(270, 60%, 55%)", "hsl(25, 90%, 55%)", "hsl(290, 55%, 65%)", "hsl(140, 60%, 45%)"];
+
 const Index = () => {
   const [createOpen, setCreateOpen] = useState(false);
   const navigate = useNavigate();
@@ -261,6 +270,64 @@ const Index = () => {
               <p className="text-[10px] text-muted-foreground flex items-center gap-1 mt-0.5">
                 <TrendingUp className="h-3 w-3 text-success" /> +8% vs last month
               </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Top Countries + Platforms */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardContent className="p-5">
+            <div className="mb-4 flex items-center gap-2">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Top Countries</h3>
+              <Globe className="h-3.5 w-3.5 text-muted-foreground" />
+            </div>
+            <div className="divide-y divide-border">
+              {[
+                { rank: 1, country: "Japan", value: "5.9K" },
+                { rank: 2, country: "United States", value: "2.4K" },
+                { rank: 3, country: "Brazil", value: "2.1K" },
+                { rank: 4, country: "Israel", value: "1.4K" },
+                { rank: 5, country: "France", value: "1.1K" },
+              ].map((c) => (
+                <div key={c.rank} className="flex items-center justify-between py-2.5 text-sm">
+                  <div className="flex items-center gap-4">
+                    <span className="w-5 text-center text-xs text-muted-foreground">{c.rank}</span>
+                    <span className="font-medium">{c.country}</span>
+                  </div>
+                  <span className="font-semibold">{c.value}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-5">
+            <div className="mb-4 flex items-center gap-2">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Platforms</h3>
+              <BarChart3 className="h-3.5 w-3.5 text-muted-foreground" />
+            </div>
+            <div className="flex items-center gap-6">
+              <ResponsiveContainer width={160} height={160}>
+                <PieChart>
+                  <Pie data={platformData} cx="50%" cy="50%" innerRadius={45} outerRadius={70} dataKey="value" paddingAngle={2} strokeWidth={0}>
+                    {platformData.map((_, i) => (
+                      <Cell key={i} fill={platformColors[i]} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="space-y-2">
+                {platformData.map((p, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs">
+                    <div className="h-2.5 w-2.5 rounded-sm" style={{ background: platformColors[i] }} />
+                    <span>{p.name}</span>
+                    <span className="font-semibold">{p.value}%</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>
