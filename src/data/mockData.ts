@@ -55,18 +55,23 @@ export const recentRegistrations = [
 
 // ===== PEOPLE PAGE DATA =====
 export const peopleMetrics = [
-  { value: "6", label: "Total Attendees" },
-  { value: "3", label: "Checked In" },
-  { value: "3", label: "VIP Attendees" },
+  { value: "12,847", label: "Total Contacts" },
+  { value: "3,842", label: "Event Attendees" },
+  { value: "1,204", label: "Checked In" },
+  { value: "486", label: "VIP Contacts" },
   { value: "69%", label: "Avg Engagement" },
+  { value: "8", label: "Industries" },
 ];
 
 export const peopleData = [
-  { initials: "SJ", name: "Sarah Johnson", email: "sarah.j@company.com", company: "Tech Corp", role: "Product Manager", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 92, tags: ["VIP", "Speaker"], color: "hsl(235, 65%, 55%)", crmSource: "hubspot", crmStage: "Customer", crmDealValue: "$48,000", crmLastSync: "2 min ago", crmLeadScore: 95 },
-  { initials: "MC", name: "Michael Chen", email: "m.chen@startup.io", company: "Startup Inc", role: "CEO", event: "Customer Success Summit", status: "REGISTERED", engagement: 78, tags: ["Sponsor"], color: "hsl(152, 55%, 45%)", crmSource: "salesforce", crmStage: "Opportunity", crmDealValue: "$125,000", crmLastSync: "5 min ago", crmLeadScore: 82 },
-  { initials: "ER", name: "Emily Rodriguez", email: "emily.r@tech.com", company: "Innovation Labs", role: "Engineering Lead", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 85, tags: ["VIP"], color: "hsl(235, 65%, 55%)", crmSource: "hubspot", crmStage: "MQL", crmDealValue: "$15,000", crmLastSync: "10 min ago", crmLeadScore: 71 },
-  { initials: "DK", name: "David Kim", email: "david.kim@enterprise.com", company: "Enterprise Solutions", role: "Director of Sales", event: "Q1 Team All-Hands", status: "REGISTERED", engagement: 65, tags: [], color: "hsl(38, 92%, 50%)", crmSource: "salesforce", crmStage: "SQL", crmDealValue: "$75,000", crmLastSync: "1 hr ago", crmLeadScore: 64 },
-  { initials: "LA", name: "Lisa Anderson", email: "l.anderson@business.net", company: "Business Dynamics", role: "Marketing Director", event: "Customer Success Summit", status: "CHECKED IN", engagement: 94, tags: ["VIP", "Sponsor"], color: "hsl(0, 72%, 55%)", crmSource: "hubspot", crmStage: "Customer", crmDealValue: "$92,000", crmLastSync: "3 min ago", crmLeadScore: 98 },
+  { initials: "SJ", name: "Sarah Johnson", email: "sarah.j@company.com", company: "Tech Corp", role: "Product Manager", location: "San Francisco, CA", industry: "Technology", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 92, tags: ["VIP", "Speaker"], color: "hsl(235, 65%, 55%)", crmSource: "hubspot", crmStage: "Customer", crmDealValue: "$48,000", crmLastSync: "2 min ago", crmLeadScore: 95 },
+  { initials: "MC", name: "Michael Chen", email: "m.chen@startup.io", company: "Startup Inc", role: "CEO", location: "New York, NY", industry: "SaaS", event: "Customer Success Summit", status: "REGISTERED", engagement: 78, tags: ["Sponsor"], color: "hsl(152, 55%, 45%)", crmSource: "salesforce", crmStage: "Opportunity", crmDealValue: "$125,000", crmLastSync: "5 min ago", crmLeadScore: 82 },
+  { initials: "ER", name: "Emily Rodriguez", email: "emily.r@tech.com", company: "Innovation Labs", role: "Engineering Lead", location: "Austin, TX", industry: "Technology", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 85, tags: ["VIP"], color: "hsl(235, 65%, 55%)", crmSource: "hubspot", crmStage: "MQL", crmDealValue: "$15,000", crmLastSync: "10 min ago", crmLeadScore: 71 },
+  { initials: "DK", name: "David Kim", email: "david.kim@enterprise.com", company: "Enterprise Solutions", role: "Director of Sales", location: "Chicago, IL", industry: "Enterprise Software", event: "Q1 Team All-Hands", status: "REGISTERED", engagement: 65, tags: [], color: "hsl(38, 92%, 50%)", crmSource: "salesforce", crmStage: "SQL", crmDealValue: "$75,000", crmLastSync: "1 hr ago", crmLeadScore: 64 },
+  { initials: "LA", name: "Lisa Anderson", email: "l.anderson@business.net", company: "Business Dynamics", role: "Marketing Director", location: "London, UK", industry: "Consulting", event: "Customer Success Summit", status: "CHECKED IN", engagement: 94, tags: ["VIP", "Sponsor"], color: "hsl(0, 72%, 55%)", crmSource: "hubspot", crmStage: "Customer", crmDealValue: "$92,000", crmLastSync: "3 min ago", crmLeadScore: 98 },
+  { initials: "JW", name: "James Wilson", email: "j.wilson@finserv.com", company: "FinServ Global", role: "VP of Operations", location: "Boston, MA", industry: "Financial Services", event: "Q1 Team All-Hands", status: "REGISTERED", engagement: 58, tags: [], color: "hsl(270, 55%, 55%)", crmSource: "salesforce", crmStage: "MQL", crmDealValue: "$35,000", crmLastSync: "20 min ago", crmLeadScore: 56 },
+  { initials: "AP", name: "Aisha Patel", email: "a.patel@healthio.com", company: "HealthIO", role: "Chief Data Officer", location: "Toronto, CA", industry: "Healthcare", event: "Customer Success Summit", status: "CHECKED IN", engagement: 88, tags: ["VIP"], color: "hsl(195, 65%, 45%)", crmSource: "hubspot", crmStage: "Opportunity", crmDealValue: "$68,000", crmLastSync: "8 min ago", crmLeadScore: 79 },
+  { initials: "TM", name: "Thomas Martinez", email: "t.martinez@retailx.com", company: "RetailX", role: "Head of Digital", location: "Miami, FL", industry: "Retail", event: "Product Launch Webinar", status: "REGISTERED", engagement: 72, tags: ["Sponsor"], color: "hsl(38, 92%, 50%)", crmSource: "salesforce", crmStage: "SQL", crmDealValue: "$55,000", crmLastSync: "15 min ago", crmLeadScore: 68 },
 ];
 
 export const crmJourneyData: Record<string, { date: string; action: string; source: string; detail: string; type: "event" | "crm" | "email" | "deal" | "meeting" | "score" }[]> = {
@@ -113,6 +118,27 @@ export const crmJourneyData: Record<string, { date: string; action: string; sour
     { date: "Feb 10, 2026", action: "Meeting completed", source: "HubSpot", detail: "Executive alignment call", type: "meeting" },
     { date: "Feb 5, 2026", action: "Lead score maxed", source: "HubSpot", detail: "Score: 88 → 98 (contract negotiation)", type: "score" },
     { date: "Jan 20, 2026", action: "First event attended", source: "SpatialChat", detail: "Tech Innovation Summit 2026", type: "event" },
+  ],
+  "James Wilson": [
+    { date: "Feb 22, 2026", action: "Registered for event", source: "SpatialChat", detail: "Q1 Team All-Hands", type: "event" },
+    { date: "Feb 19, 2026", action: "MQL qualification", source: "Salesforce", detail: "Marketing qualified lead", type: "crm" },
+    { date: "Feb 15, 2026", action: "Email opened", source: "Salesforce", detail: "Enterprise webinar invite", type: "email" },
+    { date: "Feb 10, 2026", action: "Lead score updated", source: "Salesforce", detail: "Score: 32 → 56", type: "score" },
+  ],
+  "Aisha Patel": [
+    { date: "Feb 22, 2026", action: "Checked into event", source: "SpatialChat", detail: "Customer Success Summit", type: "event" },
+    { date: "Feb 21, 2026", action: "Opportunity created", source: "HubSpot", detail: "Healthcare Plan - $68,000", type: "deal" },
+    { date: "Feb 18, 2026", action: "Demo completed", source: "HubSpot", detail: "Product walkthrough - 45 min", type: "meeting" },
+    { date: "Feb 14, 2026", action: "Registered for event", source: "SpatialChat", detail: "Customer Success Summit - VIP", type: "event" },
+    { date: "Feb 10, 2026", action: "Lead score updated", source: "HubSpot", detail: "Score: 52 → 79", type: "score" },
+    { date: "Feb 5, 2026", action: "Inbound inquiry", source: "HubSpot", detail: "Healthcare compliance features", type: "crm" },
+  ],
+  "Thomas Martinez": [
+    { date: "Feb 22, 2026", action: "Registered for event", source: "SpatialChat", detail: "Product Launch Webinar - Sponsor", type: "event" },
+    { date: "Feb 20, 2026", action: "SQL qualification", source: "Salesforce", detail: "Qualified by SDR", type: "crm" },
+    { date: "Feb 17, 2026", action: "Opportunity created", source: "Salesforce", detail: "Retail Platform - $55,000", type: "deal" },
+    { date: "Feb 12, 2026", action: "Meeting completed", source: "Salesforce", detail: "Discovery call - retail needs", type: "meeting" },
+    { date: "Feb 8, 2026", action: "Email replied", source: "Salesforce", detail: "Interested in sponsor package", type: "email" },
   ],
 };
 
