@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { eventsData } from "@/data/mockData";
+import { CreateEventDialog } from "@/components/CreateEventDialog";
 
 const statusStyles = {
   live: { label: "● Live", className: "text-success" },
@@ -14,6 +15,7 @@ const statusStyles = {
 
 const Events = () => {
   const [filter, setFilter] = useState<string>("all");
+  const [createOpen, setCreateOpen] = useState(false);
   const filters = [
     { key: "all", label: "All", count: eventsData.length },
     { key: "live", label: "Live", count: eventsData.filter(e => e.status === "live").length },
@@ -31,7 +33,7 @@ const Events = () => {
           <h1 className="text-2xl font-bold tracking-tight">Events</h1>
           <p className="text-sm text-muted-foreground">Manage all your webinars, conferences, and meetings</p>
         </div>
-        <Button className="gap-2">
+        <Button className="gap-2" onClick={() => setCreateOpen(true)}>
           <Plus className="h-4 w-4" /> Create New Event
         </Button>
       </div>
@@ -120,6 +122,8 @@ const Events = () => {
           </table>
         </CardContent>
       </Card>
+
+      <CreateEventDialog open={createOpen} onOpenChange={setCreateOpen} />
     </div>
   );
 };
