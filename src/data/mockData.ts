@@ -62,12 +62,59 @@ export const peopleMetrics = [
 ];
 
 export const peopleData = [
-  { initials: "SJ", name: "Sarah Johnson", email: "sarah.j@company.com", company: "Tech Corp", role: "Product Manager", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 92, tags: ["VIP", "Speaker"], color: "hsl(235, 65%, 55%)" },
-  { initials: "MC", name: "Michael Chen", email: "m.chen@startup.io", company: "Startup Inc", role: "CEO", event: "Customer Success Summit", status: "REGISTERED", engagement: 78, tags: ["Sponsor"], color: "hsl(152, 55%, 45%)" },
-  { initials: "ER", name: "Emily Rodriguez", email: "emily.r@tech.com", company: "Innovation Labs", role: "Engineering Lead", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 85, tags: ["VIP"], color: "hsl(235, 65%, 55%)" },
-  { initials: "DK", name: "David Kim", email: "david.kim@enterprise.com", company: "Enterprise Solutions", role: "Director of Sales", event: "Q1 Team All-Hands", status: "REGISTERED", engagement: 65, tags: [], color: "hsl(38, 92%, 50%)" },
-  { initials: "LA", name: "Lisa Anderson", email: "l.anderson@business.net", company: "Business Dynamics", role: "Marketing Director", event: "Customer Success Summit", status: "CHECKED IN", engagement: 94, tags: ["VIP", "Sponsor"], color: "hsl(0, 72%, 55%)" },
+  { initials: "SJ", name: "Sarah Johnson", email: "sarah.j@company.com", company: "Tech Corp", role: "Product Manager", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 92, tags: ["VIP", "Speaker"], color: "hsl(235, 65%, 55%)", crmSource: "hubspot", crmStage: "Customer", crmDealValue: "$48,000", crmLastSync: "2 min ago", crmLeadScore: 95 },
+  { initials: "MC", name: "Michael Chen", email: "m.chen@startup.io", company: "Startup Inc", role: "CEO", event: "Customer Success Summit", status: "REGISTERED", engagement: 78, tags: ["Sponsor"], color: "hsl(152, 55%, 45%)", crmSource: "salesforce", crmStage: "Opportunity", crmDealValue: "$125,000", crmLastSync: "5 min ago", crmLeadScore: 82 },
+  { initials: "ER", name: "Emily Rodriguez", email: "emily.r@tech.com", company: "Innovation Labs", role: "Engineering Lead", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 85, tags: ["VIP"], color: "hsl(235, 65%, 55%)", crmSource: "hubspot", crmStage: "MQL", crmDealValue: "$15,000", crmLastSync: "10 min ago", crmLeadScore: 71 },
+  { initials: "DK", name: "David Kim", email: "david.kim@enterprise.com", company: "Enterprise Solutions", role: "Director of Sales", event: "Q1 Team All-Hands", status: "REGISTERED", engagement: 65, tags: [], color: "hsl(38, 92%, 50%)", crmSource: "salesforce", crmStage: "SQL", crmDealValue: "$75,000", crmLastSync: "1 hr ago", crmLeadScore: 64 },
+  { initials: "LA", name: "Lisa Anderson", email: "l.anderson@business.net", company: "Business Dynamics", role: "Marketing Director", event: "Customer Success Summit", status: "CHECKED IN", engagement: 94, tags: ["VIP", "Sponsor"], color: "hsl(0, 72%, 55%)", crmSource: "hubspot", crmStage: "Customer", crmDealValue: "$92,000", crmLastSync: "3 min ago", crmLeadScore: 98 },
 ];
+
+export const crmJourneyData: Record<string, { date: string; action: string; source: string; detail: string; type: "event" | "crm" | "email" | "deal" | "meeting" | "score" }[]> = {
+  "Sarah Johnson": [
+    { date: "Feb 22, 2026", action: "Checked into event", source: "SpatialChat", detail: "Product Launch Webinar", type: "event" },
+    { date: "Feb 22, 2026", action: "Contact synced to HubSpot", source: "HubSpot", detail: "Auto-synced after check-in", type: "crm" },
+    { date: "Feb 21, 2026", action: "Opened email campaign", source: "HubSpot", detail: "Product Launch Invite - 3x opens", type: "email" },
+    { date: "Feb 20, 2026", action: "Registered for event", source: "SpatialChat", detail: "Product Launch Webinar - VIP ticket", type: "event" },
+    { date: "Feb 18, 2026", action: "Deal updated", source: "HubSpot", detail: "Deal value increased to $48,000", type: "deal" },
+    { date: "Feb 15, 2026", action: "Meeting scheduled", source: "HubSpot", detail: "Demo call with Sales team", type: "meeting" },
+    { date: "Feb 10, 2026", action: "Lead score updated", source: "HubSpot", detail: "Score: 72 → 95 (VIP event attendance)", type: "score" },
+    { date: "Feb 5, 2026", action: "Form submission", source: "HubSpot", detail: "Downloaded Product Whitepaper", type: "crm" },
+    { date: "Jan 28, 2026", action: "First website visit", source: "HubSpot", detail: "Organic search - pricing page", type: "crm" },
+  ],
+  "Michael Chen": [
+    { date: "Feb 22, 2026", action: "Contact synced to Salesforce", source: "Salesforce", detail: "Auto-synced on registration", type: "crm" },
+    { date: "Feb 21, 2026", action: "Registered for event", source: "SpatialChat", detail: "Customer Success Summit - Sponsor", type: "event" },
+    { date: "Feb 19, 2026", action: "Opportunity created", source: "Salesforce", detail: "Enterprise Plan - $125,000", type: "deal" },
+    { date: "Feb 16, 2026", action: "Email sequence started", source: "Salesforce", detail: "Enterprise nurture sequence", type: "email" },
+    { date: "Feb 12, 2026", action: "Discovery call completed", source: "Salesforce", detail: "30 min call with AE team", type: "meeting" },
+    { date: "Feb 8, 2026", action: "Lead score updated", source: "Salesforce", detail: "Score: 55 → 82 (sponsor interest)", type: "score" },
+    { date: "Feb 1, 2026", action: "Inbound lead captured", source: "Salesforce", detail: "Contact form - enterprise inquiry", type: "crm" },
+  ],
+  "Emily Rodriguez": [
+    { date: "Feb 22, 2026", action: "Checked into event", source: "SpatialChat", detail: "Product Launch Webinar", type: "event" },
+    { date: "Feb 20, 2026", action: "Registered for event", source: "SpatialChat", detail: "Product Launch Webinar - VIP", type: "event" },
+    { date: "Feb 18, 2026", action: "Contact synced to HubSpot", source: "HubSpot", detail: "MQL qualification triggered", type: "crm" },
+    { date: "Feb 15, 2026", action: "Clicked email CTA", source: "HubSpot", detail: "Webinar invite - clicked 'Register Now'", type: "email" },
+    { date: "Feb 10, 2026", action: "Lead score updated", source: "HubSpot", detail: "Score: 45 → 71 (multiple content downloads)", type: "score" },
+  ],
+  "David Kim": [
+    { date: "Feb 22, 2026", action: "Registered for event", source: "SpatialChat", detail: "Q1 Team All-Hands", type: "event" },
+    { date: "Feb 20, 2026", action: "SQL qualification", source: "Salesforce", detail: "Qualified by SDR team", type: "crm" },
+    { date: "Feb 17, 2026", action: "Opportunity created", source: "Salesforce", detail: "Platform license - $75,000", type: "deal" },
+    { date: "Feb 14, 2026", action: "Demo completed", source: "Salesforce", detail: "45 min product demo", type: "meeting" },
+    { date: "Feb 10, 2026", action: "Email replied", source: "Salesforce", detail: "Replied to outbound sequence", type: "email" },
+  ],
+  "Lisa Anderson": [
+    { date: "Feb 22, 2026", action: "Checked into event", source: "SpatialChat", detail: "Customer Success Summit", type: "event" },
+    { date: "Feb 22, 2026", action: "Deal stage updated", source: "HubSpot", detail: "Moved to 'Customer' - $92,000 closed", type: "deal" },
+    { date: "Feb 21, 2026", action: "Contract signed", source: "HubSpot", detail: "Annual enterprise agreement", type: "deal" },
+    { date: "Feb 19, 2026", action: "Registered for event", source: "SpatialChat", detail: "Customer Success Summit - VIP + Sponsor", type: "event" },
+    { date: "Feb 15, 2026", action: "Proposal sent", source: "HubSpot", detail: "Custom enterprise proposal", type: "crm" },
+    { date: "Feb 10, 2026", action: "Meeting completed", source: "HubSpot", detail: "Executive alignment call", type: "meeting" },
+    { date: "Feb 5, 2026", action: "Lead score maxed", source: "HubSpot", detail: "Score: 88 → 98 (contract negotiation)", type: "score" },
+    { date: "Jan 20, 2026", action: "First event attended", source: "SpatialChat", detail: "Tech Innovation Summit 2026", type: "event" },
+  ],
+};
 
 // ===== ENGAGEMENT PAGE DATA =====
 export const engagementMetrics = [
