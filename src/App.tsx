@@ -12,6 +12,7 @@ import Engagement from "./pages/Engagement";
 import Analytics from "./pages/Analytics";
 import Revenue from "./pages/Revenue";
 import Recordings from "./pages/Recordings";
+import Networking from "./pages/Networking";
 import Integrations from "./pages/Integrations";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/revenue" element={<Revenue />} />
             <Route path="/recordings" element={<Recordings />} />
+            <Route path="/networking" element={<Networking />} />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/community" element={<Community />} />
             <Route path="/settings" element={<Settings />} />

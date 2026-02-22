@@ -36,7 +36,7 @@ const navItems = [
   { title: "Analytics", url: "/analytics", icon: BarChart3 },
   { title: "Revenue", url: "/revenue", icon: DollarSign },
   { title: "Recordings", url: "/recordings", icon: Video },
-  { title: "Networking", url: "/networking", icon: Users2, soon: true },
+  { title: "Networking", url: "/networking", icon: Users2 },
   { title: "Community", url: "/community", icon: Globe, soon: true },
   { title: "Integrations", url: "/integrations", icon: Plug, soon: true },
   { title: "Settings", url: "/settings", icon: Settings },
