@@ -41,17 +41,21 @@ const Index = () => {
           <Card key={i}>
             <CardContent className="flex items-center gap-4 p-5">
               <div
-                className="flex h-12 w-12 items-center justify-center rounded-lg"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
                 style={{ backgroundColor: metric.color }}
               >
-                <span className="text-sm text-white">
+                <span className="text-white">
                   {i === 0 && <CalendarDays className="h-5 w-5" />}
                   {i === 1 && <Users className="h-5 w-5" />}
                   {i === 2 && <Zap className="h-5 w-5" />}
                   {i === 3 && <DollarSign className="h-5 w-5" />}
                 </span>
               </div>
-              <span className="text-3xl font-bold">{metric.value}</span>
+              <div>
+                <p className="text-2xl font-bold">{metric.value}</p>
+                <p className="text-sm text-muted-foreground">{metric.label}</p>
+                <p className="text-xs text-emerald-600">{metric.change}</p>
+              </div>
             </CardContent>
           </Card>
         ))}
