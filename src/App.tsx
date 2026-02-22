@@ -17,6 +17,7 @@ import Integrations from "./pages/Integrations";
 import AIAssistant from "./pages/AIAssistant";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
+import Billing from "./pages/Billing";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/ai-assistant" element={<AIAssistant />} />
             <Route path="/community" element={<Community />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/billing" element={<Billing />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </DashboardLayout>
