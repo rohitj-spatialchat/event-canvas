@@ -12,12 +12,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const usageData = [
-  { description: "Scale: Monthly subscription", amount: "", cost: "$500.00" },
-  { description: "Scale: 1,500,000 incl. WebRTC participant minutes", amount: "1,500,000 min", cost: "$0.00" },
-  { description: "Scale: Additional WebRTC participant minutes ($0.4 per 1000 minutes)", amount: "1,715,277 min", cost: "$686.00" },
-  { description: "Scale: 3000GB incl. Downstream data transfer", amount: "3.00 TB", cost: "$0.00" },
-  { description: "Scale: Additional Downstream data transfer ($0.1 per GB)", amount: "7.88 TB", cost: "$788.20" },
+const subscriptionBreakdown = [
+  { description: "SpatialChat Webinar Plan", cost: "$899.00" },
+  { description: "SpatialChat Community", cost: "$49.00" },
+  { description: "Registration Add-on", cost: "$49.00" },
 ];
 
 const Billing = () => {
@@ -28,82 +26,69 @@ const Billing = () => {
         <h1 className="text-2xl font-bold tracking-tight">Billing</h1>
       </div>
 
-      {/* Plan & Cycle */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex gap-4">
-          <Card className="min-w-[200px]">
-            <CardContent className="p-4">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Current Plan</p>
-              <p className="mt-1 text-lg font-bold">Scale</p>
-            </CardContent>
-          </Card>
-          <Card className="min-w-[200px]">
-            <CardContent className="p-4">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Next Billing Cycle</p>
-              <p className="mt-1 text-lg font-bold">March 1, 2026</p>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm">Change plan</Button>
-          <a href="https://app.spatial.chat/s/JZKXrs3KFfcHdwJIpyrR?room=7nsHiBxuj1f7T356NQLB&hidePronounSpaceId=SSVrdUFoldBhNy4brmEC" target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" size="sm" className="gap-1">
-              Manage <ArrowUpRight className="h-3 w-3" />
-            </Button>
-          </a>
-        </div>
+      {/* Plan, Cycle, Users, Monthly */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardContent className="p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Current Plan</p>
+            <p className="mt-1 text-lg font-bold">Scale</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Next Billing Cycle</p>
+            <p className="mt-1 text-lg font-bold">March 1, 2026</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Active Users</p>
+            <div className="mt-1 flex items-center gap-2">
+              <Users className="h-4 w-4 text-primary" />
+              <p className="text-lg font-bold">500</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Monthly Payment</p>
+            <p className="mt-1 text-lg font-bold text-primary">$999.00</p>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Usage Summary */}
-      <div>
-        <h2 className="text-lg font-semibold mb-3">Usage</h2>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <Card>
-            <CardContent className="p-5 text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Bandwidth Today</p>
-              <p className="mt-2 text-3xl font-bold text-primary">14 <span className="text-base font-medium text-muted-foreground">MB</span></p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-5 text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Bandwidth in February</p>
-              <p className="mt-2 text-3xl font-bold text-primary">10.88 <span className="text-base font-medium text-muted-foreground">TB</span></p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-5 text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Next Invoice</p>
-              <p className="mt-2 text-3xl font-bold text-primary">$1,974.20</p>
-            </CardContent>
-          </Card>
-        </div>
+      <div className="flex gap-2">
+        <Button variant="outline" size="sm">Change plan</Button>
+        <a href="https://app.spatial.chat/s/JZKXrs3KFfcHdwJIpyrR?room=7nsHiBxuj1f7T356NQLB&hidePronounSpaceId=SSVrdUFoldBhNy4brmEC" target="_blank" rel="noopener noreferrer">
+          <Button variant="outline" size="sm" className="gap-1">
+            Manage <ArrowUpRight className="h-3 w-3" />
+          </Button>
+        </a>
       </div>
 
-      {/* Usage Table */}
+      {/* Subscription Breakdown */}
       <Card>
         <CardContent className="p-0">
           <div className="px-5 py-3.5 border-b border-border">
-            <h3 className="text-sm font-semibold">February 2026 Usage</h3>
+            <h3 className="text-sm font-semibold">Monthly Subscription Breakdown</h3>
           </div>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="text-[10px] uppercase tracking-wider">Description</TableHead>
-                <TableHead className="text-[10px] uppercase tracking-wider text-right">Amount</TableHead>
                 <TableHead className="text-[10px] uppercase tracking-wider text-right">Cost</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {usageData.map((row, i) => (
+              {subscriptionBreakdown.map((row, i) => (
                 <TableRow key={i}>
                   <TableCell className="text-sm">{row.description}</TableCell>
-                  <TableCell className="text-sm text-right text-muted-foreground">{row.amount}</TableCell>
                   <TableCell className="text-sm text-right font-medium">{row.cost}</TableCell>
                 </TableRow>
               ))}
               <TableRow>
-                <TableCell colSpan={2} className="text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total:</TableCell>
-                <TableCell className="text-right font-bold">$1,974.20</TableCell>
+                <TableCell className="text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total:</TableCell>
+                <TableCell className="text-right font-bold text-primary">$999.00</TableCell>
               </TableRow>
             </TableBody>
           </Table>
