@@ -1,9 +1,9 @@
 // ===== HOME PAGE DATA =====
 export const homeMetrics = [
-  { value: "24", color: "hsl(235, 65%, 55%)" },
-  { value: "3842", color: "hsl(152, 55%, 45%)" },
-  { value: "1234", color: "hsl(0, 72%, 55%)" },
-  { value: "68%", color: "hsl(38, 92%, 50%)" },
+  { value: "24", label: "Total Events", change: "+12% this month", color: "hsl(235, 65%, 55%)" },
+  { value: "3,842", label: "Total Attendees", change: "+24% this month", color: "hsl(152, 55%, 45%)" },
+  { value: "1,234", label: "Engagements", change: "+18% this week", color: "hsl(0, 72%, 55%)" },
+  { value: "$45.2K", label: "Revenue", change: "+8% this month", color: "hsl(38, 92%, 50%)" },
 ];
 
 export const upcomingEvents = [
