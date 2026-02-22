@@ -116,11 +116,24 @@ const Revenue = () => {
 
       {/* Metrics */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {revenueMetrics.map((m, i) => (
+        {[
+          { label: "Total Revenue", value: "$45,250", color: "hsl(152, 55%, 45%)" },
+          { label: "Avg Revenue / Event", value: "$1,884", color: "hsl(235, 65%, 55%)" },
+          { label: "Total Attendees", value: "3,842", color: "hsl(38, 92%, 50%)" },
+          { label: "Highest Single Event", value: "$24,800", color: "hsl(0, 72%, 55%)" },
+        ].map((m, i) => (
           <Card key={i}>
-            <CardContent className="flex items-center gap-4 p-5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg" style={{ backgroundColor: m.color }} />
-              <p className="text-3xl font-bold">{m.value}</p>
+            <CardContent className="p-5">
+              <p className="text-xs font-medium text-muted-foreground mb-1">{m.label}</p>
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ backgroundColor: m.color }}>
+                  {i === 0 ? <DollarSign className="h-4 w-4 text-white" /> :
+                   i === 1 ? <TrendingUp className="h-4 w-4 text-white" /> :
+                   i === 2 ? <Users className="h-4 w-4 text-white" /> :
+                   <DollarSign className="h-4 w-4 text-white" />}
+                </div>
+                <p className="text-2xl font-bold">{m.value}</p>
+              </div>
             </CardContent>
           </Card>
         ))}
