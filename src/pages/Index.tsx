@@ -86,9 +86,11 @@ const Index = () => {
           <span className="font-semibold">Launch Your Live Space</span>
           <span className="text-primary-foreground/80">Start hosting immersive virtual events</span>
         </div>
-        <Button variant="secondary" size="sm" className="gap-1.5">
-          Go to My Space <ArrowRight className="h-4 w-4" />
-        </Button>
+        <a href="https://app.spatial.chat/s/JZKXrs3KFfcHdwJIpyrR?room=7nsHiBxuj1f7T356NQLB&hidePronounSpaceId=SSVrdUFoldBhNy4brmEC" target="_blank" rel="noopener noreferrer">
+          <Button variant="secondary" size="sm" className="gap-1.5">
+            Go to My Space <ArrowRight className="h-4 w-4" />
+          </Button>
+        </a>
       </div>
 
       {/* Primary Metrics Row */}
