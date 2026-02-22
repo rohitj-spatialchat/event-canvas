@@ -36,29 +36,15 @@ const Index = () => {
       </div>
 
       {/* Metric Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {homeMetrics.map((metric, i) => (
-          <Card key={i}>
-            <CardContent className="flex items-center gap-4 p-5">
-              <div
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
-                style={{ backgroundColor: metric.color }}
-              >
-                <span className="text-white">
-                  {i === 0 && <CalendarDays className="h-5 w-5" />}
-                  {i === 1 && <Users className="h-5 w-5" />}
-                  {i === 2 && <Zap className="h-5 w-5" />}
-                  {i === 3 && <DollarSign className="h-5 w-5" />}
-                </span>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">{metric.value}</p>
-                <p className="text-sm text-muted-foreground">{metric.label}</p>
-                <p className="text-xs text-emerald-600">{metric.change}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+      <div className="rounded-xl bg-primary p-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {homeMetrics.map((metric, i) => (
+            <div key={i} className="rounded-lg border-2 border-primary bg-card p-5">
+              <p className="text-sm font-medium text-primary">{metric.label}</p>
+              <p className="mt-1 text-3xl font-bold text-foreground">{metric.value}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Bottom: Events + Activity */}
