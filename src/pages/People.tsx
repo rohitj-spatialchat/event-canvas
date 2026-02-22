@@ -128,10 +128,11 @@ const People = () => {
       {/* Table */}
       <Card>
         <CardContent className="p-0 overflow-x-auto">
-          <table className="w-full min-w-[1100px]">
+          <table className="w-full min-w-[1200px]">
             <thead>
               <tr className="border-b border-border text-left text-xs font-medium uppercase text-muted-foreground">
                 <th className="p-3">Attendee</th>
+                <th className="p-3">Company</th>
                 <th className="p-3">Role</th>
                 <th className="p-3">Location</th>
                 <th className="p-3">Industry</th>
@@ -165,11 +166,14 @@ const People = () => {
                     </td>
                     <td className="p-3">
                       <div className="flex items-center gap-1.5">
+                        <Building2 className="h-3 w-3 text-muted-foreground shrink-0" />
+                        <span className="text-sm font-medium truncate">{person.company}</span>
+                      </div>
+                    </td>
+                    <td className="p-3">
+                      <div className="flex items-center gap-1.5">
                         <Briefcase className="h-3 w-3 text-muted-foreground shrink-0" />
-                        <div className="min-w-0">
-                          <p className="text-sm truncate">{person.role}</p>
-                          <p className="text-[11px] text-muted-foreground truncate">{person.company}</p>
-                        </div>
+                        <span className="text-sm truncate">{person.role}</span>
                       </div>
                     </td>
                     <td className="p-3">
