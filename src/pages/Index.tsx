@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { ArrowRight, Filter, Plus, Users, CalendarDays, Zap, DollarSign } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { CreateEventDialog } from "@/components/CreateEventDialog";
 import { homeMetrics, upcomingEvents, recentActivity } from "@/data/mockData";
 
 const activityIcons: Record<string, string> = {
@@ -11,6 +13,8 @@ const activityIcons: Record<string, string> = {
 };
 
 const Index = () => {
+  const [createOpen, setCreateOpen] = useState(false);
+
   return (
     <div className="space-y-6">
       {/* Action buttons */}
@@ -18,10 +22,12 @@ const Index = () => {
         <Button variant="outline" className="gap-2">
           <Filter className="h-4 w-4" /> Filter
         </Button>
-        <Button className="gap-2">
+        <Button className="gap-2" onClick={() => setCreateOpen(true)}>
           <Plus className="h-4 w-4" /> Create Event
         </Button>
       </div>
+
+      <CreateEventDialog open={createOpen} onOpenChange={setCreateOpen} />
 
       {/* Banner */}
       <div className="flex items-center justify-between rounded-lg bg-primary px-6 py-3">
