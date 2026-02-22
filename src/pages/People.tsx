@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Upload, Plus, Search, UserPlus, MoreVertical, ExternalLink, ArrowRight, X, RefreshCw, Zap, Mail, Phone, Calendar, TrendingUp, DollarSign, MessageSquare, Target, Clock } from "lucide-react";
+import { Upload, Plus, Search, UserPlus, MoreVertical, ExternalLink, ArrowRight, X, RefreshCw, Zap, Mail, Phone, Calendar, TrendingUp, DollarSign, MessageSquare, Target, Clock, MapPin, Briefcase, Building2, Database } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -56,15 +56,22 @@ const People = () => {
       </div>
 
       {/* Metrics */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {peopleMetrics.map((m, i) => (
           <Card key={i}>
-            <CardContent className="flex flex-col items-center justify-center p-5">
-              <p className="text-3xl font-bold">{m.value}</p>
-              <p className="text-sm text-muted-foreground">{m.label}</p>
+            <CardContent className="flex flex-col items-center justify-center p-4">
+              <p className="text-2xl font-bold">{m.value}</p>
+              <p className="text-xs text-muted-foreground">{m.label}</p>
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* Contact count bar */}
+      <div className="flex items-center gap-3 rounded-lg bg-muted/50 px-4 py-2.5">
+        <Database className="h-4 w-4 text-primary" />
+        <span className="text-sm font-medium">Showing {peopleData.length} of <span className="text-primary font-bold">12,847</span> contacts</span>
+        <span className="text-xs text-muted-foreground">• Synced from HubSpot (7,234) and Salesforce (5,613)</span>
       </div>
 
       {/* CRM Integration Banner */}
@@ -120,18 +127,20 @@ const People = () => {
 
       {/* Table */}
       <Card>
-        <CardContent className="p-0">
-          <table className="w-full">
+        <CardContent className="p-0 overflow-x-auto">
+          <table className="w-full min-w-[1100px]">
             <thead>
               <tr className="border-b border-border text-left text-xs font-medium uppercase text-muted-foreground">
-                <th className="p-4">Attendee</th>
-                <th className="p-4">Company</th>
-                <th className="p-4">CRM</th>
-                <th className="p-4">Stage</th>
-                <th className="p-4">Deal Value</th>
-                <th className="p-4">Engagement</th>
-                <th className="p-4">Tags</th>
-                <th className="p-4">Journey</th>
+                <th className="p-3">Attendee</th>
+                <th className="p-3">Role</th>
+                <th className="p-3">Location</th>
+                <th className="p-3">Industry</th>
+                <th className="p-3">CRM</th>
+                <th className="p-3">Stage</th>
+                <th className="p-3">Deal Value</th>
+                <th className="p-3">Engagement</th>
+                <th className="p-3">Tags</th>
+                <th className="p-3">Journey</th>
               </tr>
             </thead>
             <tbody>
@@ -140,25 +149,41 @@ const People = () => {
                 const crmInfo = crmLogos[person.crmSource];
                 return (
                   <tr key={i} className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors">
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
+                    <td className="p-3">
+                      <div className="flex items-center gap-2.5">
                         <div
-                          className="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium text-white"
+                          className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-medium text-white shrink-0"
                           style={{ backgroundColor: person.color }}
                         >
                           {person.initials}
                         </div>
-                        <div>
-                          <p className="text-sm font-medium">{person.name}</p>
-                          <p className="text-xs text-muted-foreground">{person.email}</p>
+                        <div className="min-w-0">
+                          <p className="text-sm font-medium truncate">{person.name}</p>
+                          <p className="text-[11px] text-muted-foreground truncate">{person.email}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="p-4">
-                      <p className="text-sm">{person.company}</p>
-                      <p className="text-xs text-muted-foreground">{person.role}</p>
+                    <td className="p-3">
+                      <div className="flex items-center gap-1.5">
+                        <Briefcase className="h-3 w-3 text-muted-foreground shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-sm truncate">{person.role}</p>
+                          <p className="text-[11px] text-muted-foreground truncate">{person.company}</p>
+                        </div>
+                      </div>
                     </td>
-                    <td className="p-4">
+                    <td className="p-3">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="h-3 w-3 text-muted-foreground shrink-0" />
+                        <span className="text-sm truncate">{person.location}</span>
+                      </div>
+                    </td>
+                    <td className="p-3">
+                      <Badge variant="outline" className="text-[10px] font-medium whitespace-nowrap">
+                        {person.industry}
+                      </Badge>
+                    </td>
+                    <td className="p-3">
                       <div className="flex items-center gap-1.5">
                         <span
                           className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
@@ -166,39 +191,38 @@ const People = () => {
                         >
                           {crmInfo.label}
                         </span>
-                        <span className="text-[10px] text-muted-foreground">{person.crmLastSync}</span>
                       </div>
                     </td>
-                    <td className="p-4">
+                    <td className="p-3">
                       <Badge className={`text-[10px] ${stageColors[person.crmStage] || "bg-muted text-muted-foreground"}`}>
                         {person.crmStage}
                       </Badge>
                     </td>
-                    <td className="p-4">
+                    <td className="p-3">
                       <p className="text-sm font-semibold">{person.crmDealValue}</p>
                       <div className="flex items-center gap-1 mt-0.5">
                         <TrendingUp className="h-3 w-3 text-success" />
-                        <span className="text-[10px] text-success font-medium">Score: {person.crmLeadScore}</span>
+                        <span className="text-[10px] text-success font-medium">{person.crmLeadScore}</span>
                       </div>
                     </td>
-                    <td className="p-4">
+                    <td className="p-3">
                       <div className="flex items-center gap-2">
-                        <div className="h-1.5 w-16 rounded-full bg-muted">
+                        <div className="h-1.5 w-14 rounded-full bg-muted">
                           <div className={`h-full rounded-full ${engColor}`} style={{ width: `${person.engagement}%` }} />
                         </div>
-                        <span className="text-xs">{person.engagement}%</span>
+                        <span className="text-[10px]">{person.engagement}%</span>
                       </div>
                     </td>
-                    <td className="p-4">
+                    <td className="p-3">
                       <div className="flex gap-1">
                         {person.tags.length > 0 ? person.tags.map(tag => (
-                          <Badge key={tag} variant="outline" className={`text-xs ${tag === "VIP" ? "border-primary text-primary" : tag === "Speaker" ? "border-success text-success" : "border-warning text-warning"}`}>
+                          <Badge key={tag} variant="outline" className={`text-[10px] ${tag === "VIP" ? "border-primary text-primary" : tag === "Speaker" ? "border-success text-success" : "border-warning text-warning"}`}>
                             {tag}
                           </Badge>
                         )) : <span className="text-xs text-muted-foreground">—</span>}
                       </div>
                     </td>
-                    <td className="p-4">
+                    <td className="p-3">
                       <Button
                         variant="outline"
                         size="sm"
