@@ -13,6 +13,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Bot,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { SpatialChatLogo } from "@/components/SpatialChatLogo";
@@ -38,6 +39,7 @@ const navItems = [
   { title: "Recordings", url: "/recordings", icon: Video },
   { title: "Networking", url: "/networking", icon: Users2 },
   { title: "Community", url: "/community", icon: Globe },
+  { title: "AI Assistant", url: "/ai-assistant", icon: Bot },
   { title: "Integrations", url: "/integrations", icon: Plug, soon: true },
   { title: "Settings", url: "/settings", icon: Settings },
 ];

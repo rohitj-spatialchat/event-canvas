@@ -14,6 +14,7 @@ import Revenue from "./pages/Revenue";
 import Recordings from "./pages/Recordings";
 import Networking from "./pages/Networking";
 import Integrations from "./pages/Integrations";
+import AIAssistant from "./pages/AIAssistant";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/recordings" element={<Recordings />} />
             <Route path="/networking" element={<Networking />} />
             <Route path="/integrations" element={<Integrations />} />
+            <Route path="/ai-assistant" element={<AIAssistant />} />
             <Route path="/community" element={<Community />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<NotFound />} />
