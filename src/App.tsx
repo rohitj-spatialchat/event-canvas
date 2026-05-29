@@ -45,6 +45,7 @@ const App = () => (
             <Route path="/community" element={<Community />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/billing" element={<Billing />} />
+            <Route path="/plan-builder" element={<PlanBuilder />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </DashboardLayout>
