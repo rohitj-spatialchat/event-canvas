@@ -18,6 +18,7 @@ import AIAssistant from "./pages/AIAssistant";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
 import Billing from "./pages/Billing";
+import PlanBuilder from "./pages/PlanBuilder";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/community" element={<Community />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/billing" element={<Billing />} />
+            <Route path="/plan-builder" element={<PlanBuilder />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </DashboardLayout>

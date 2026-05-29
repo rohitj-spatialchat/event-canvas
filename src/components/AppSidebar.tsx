@@ -20,6 +20,7 @@ import {
   Flag,
   ArrowUpRight,
   CreditCard,
+  Layers,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { SpatialChatLogo } from "@/components/SpatialChatLogo";
@@ -54,6 +55,7 @@ const navItems = [
   { title: "AI Assistant", url: "/ai-assistant", icon: Bot },
   { title: "Integrations", url: "/integrations", icon: Plug, soon: true },
   { title: "Billing", url: "/billing", icon: CreditCard },
+  { title: "Plan Builder", url: "/plan-builder", icon: Layers },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 
