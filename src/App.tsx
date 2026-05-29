@@ -18,6 +18,7 @@ import AIAssistant from "./pages/AIAssistant";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
 import Billing from "./pages/Billing";
+import PlanBuilder from "./pages/PlanBuilder";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
