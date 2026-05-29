@@ -20,6 +20,7 @@ import {
   Flag,
   ArrowUpRight,
   CreditCard,
+  Layers,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { SpatialChatLogo } from "@/components/SpatialChatLogo";
