@@ -20,14 +20,9 @@ export const recentActivity = [
 ];
 
 // ===== EVENTS PAGE DATA =====
-export const eventsData = [
-  { id: "1", name: "Product Launch Webinar", type: "Webinar", date: "Feb 18, 2026", status: "live" as const, registrations: 312, capacity: 500, revenue: "$2,450" },
-  { id: "2", name: "Q1 Team All-Hands", type: "Internal", date: "Feb 22, 2026", status: "scheduled" as const, registrations: 156, capacity: 200, revenue: "-" },
-  { id: "3", name: "Customer Success Summit", type: "Conference", date: "Feb 25, 2026", status: "scheduled" as const, registrations: 412, capacity: 1000, revenue: "$8,900" },
-  { id: "4", name: "Tech Talk Series: AI Trends", type: "Webinar", date: "Mar 1, 2026", status: "draft" as const, registrations: 0, capacity: 300, revenue: "-" },
-  { id: "5", name: "Quarterly Business Review", type: "Internal", date: "Jan 15, 2026", status: "ended" as const, registrations: 45, capacity: 50, revenue: "-" },
-  { id: "6", name: "Design System Workshop", type: "Workshop", date: "Mar 10, 2026", status: "scheduled" as const, registrations: 12, capacity: 50, revenue: "$1,200" },
-  { id: "7", name: "Marketing Strategy 2026", type: "Meeting", date: "Mar 15, 2026", status: "draft" as const, registrations: 0, capacity: 100, revenue: "-" },
+export const eventsData: { id: string; name: string; type: string; date: string; status: "live" | "scheduled" | "draft" | "ended"; registrations: number; capacity: number; revenue: string }[] = [
+  { id: "1", name: "Twilight City — Thinkies World", type: "Thinkies World Congress", date: "May 20, 2026", status: "ended", registrations: 83, capacity: 100, revenue: "-" },
+  { id: "2", name: "Cecil's Virtual Lounge", type: "CecilsVirtualLounge", date: "Apr 17, 2026", status: "ended", registrations: 24, capacity: 30, revenue: "-" },
 ];
 
 // ===== REGISTRATION PAGE DATA =====
@@ -55,23 +50,23 @@ export const recentRegistrations = [
 
 // ===== PEOPLE PAGE DATA =====
 export const peopleMetrics = [
-  { value: "12,847", label: "Total Contacts" },
-  { value: "3,842", label: "Event Attendees" },
-  { value: "1,204", label: "Checked In" },
-  { value: "486", label: "VIP Contacts" },
-  { value: "69%", label: "Avg Engagement" },
-  { value: "8", label: "Industries" },
+  { value: "107", label: "Total Attendees" },
+  { value: "2", label: "Events" },
+  { value: "62", label: "Checked In" },
+  { value: "18", label: "VIP Contacts" },
+  { value: "74%", label: "Avg Engagement" },
+  { value: "9", label: "Companies" },
 ];
 
 export const peopleData = [
-  { initials: "SJ", name: "Sarah Johnson", email: "sarah.j@apple.com", company: "Apple", role: "Product Manager", location: "San Francisco, CA", industry: "Technology", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 92, tags: ["VIP", "Speaker"], color: "hsl(235, 65%, 55%)", crmSource: "hubspot", crmStage: "Customer", crmDealValue: "$48,000", crmLastSync: "2 min ago", crmLeadScore: 95 },
-  { initials: "MC", name: "Michael Chen", email: "m.chen@microsoft.com", company: "Microsoft", role: "CEO", location: "New York, NY", industry: "SaaS", event: "Customer Success Summit", status: "REGISTERED", engagement: 78, tags: ["Sponsor"], color: "hsl(152, 55%, 45%)", crmSource: "salesforce", crmStage: "Opportunity", crmDealValue: "$125,000", crmLastSync: "5 min ago", crmLeadScore: 82 },
-  { initials: "ER", name: "Emily Rodriguez", email: "emily.r@google.com", company: "Google", role: "Engineering Lead", location: "Austin, TX", industry: "Technology", event: "Product Launch Webinar", status: "CHECKED IN", engagement: 85, tags: ["VIP"], color: "hsl(235, 65%, 55%)", crmSource: "hubspot", crmStage: "MQL", crmDealValue: "$15,000", crmLastSync: "10 min ago", crmLeadScore: 71 },
-  { initials: "DK", name: "David Kim", email: "david.kim@amazon.com", company: "Amazon", role: "Director of Sales", location: "Chicago, IL", industry: "Enterprise Software", event: "Q1 Team All-Hands", status: "REGISTERED", engagement: 65, tags: [], color: "hsl(38, 92%, 50%)", crmSource: "salesforce", crmStage: "SQL", crmDealValue: "$75,000", crmLastSync: "1 hr ago", crmLeadScore: 64 },
-  { initials: "LA", name: "Lisa Anderson", email: "l.anderson@jpmorgan.com", company: "JPMorgan Chase", role: "Marketing Director", location: "London, UK", industry: "Financial Services", event: "Customer Success Summit", status: "CHECKED IN", engagement: 94, tags: ["VIP", "Sponsor"], color: "hsl(0, 72%, 55%)", crmSource: "hubspot", crmStage: "Customer", crmDealValue: "$92,000", crmLastSync: "3 min ago", crmLeadScore: 98 },
-  { initials: "JW", name: "James Wilson", email: "j.wilson@walmart.com", company: "Walmart", role: "VP of Operations", location: "Boston, MA", industry: "Retail", event: "Q1 Team All-Hands", status: "REGISTERED", engagement: 58, tags: [], color: "hsl(270, 55%, 55%)", crmSource: "salesforce", crmStage: "MQL", crmDealValue: "$35,000", crmLastSync: "20 min ago", crmLeadScore: 56 },
-  { initials: "AP", name: "Aisha Patel", email: "a.patel@unitedhealth.com", company: "UnitedHealth Group", role: "Chief Data Officer", location: "Toronto, CA", industry: "Healthcare", event: "Customer Success Summit", status: "CHECKED IN", engagement: 88, tags: ["VIP"], color: "hsl(195, 65%, 45%)", crmSource: "hubspot", crmStage: "Opportunity", crmDealValue: "$68,000", crmLastSync: "8 min ago", crmLeadScore: 79 },
-  { initials: "TM", name: "Thomas Martinez", email: "t.martinez@meta.com", company: "Meta", role: "Head of Digital", location: "Miami, FL", industry: "Technology", event: "Product Launch Webinar", status: "REGISTERED", engagement: 72, tags: ["Sponsor"], color: "hsl(38, 92%, 50%)", crmSource: "salesforce", crmStage: "SQL", crmDealValue: "$55,000", crmLastSync: "15 min ago", crmLeadScore: 68 },
+  { initials: "AS", name: "Arty Starr", email: "arty@twilightcity.net", company: "Apple", role: "Marketing Manager", location: "United States", industry: "Technology", event: "Twilight City — Thinkies World", status: "CHECKED IN", engagement: 92, tags: ["VIP"], color: "hsl(235, 65%, 55%)", crmSource: "salesforce", crmStage: "Customer", crmDealValue: "$48,000", crmLastSync: "Jun 12, 2026", crmLeadScore: 95 },
+  { initials: "M", name: "Mario", email: "mario@mariomelo.com", company: "Google", role: "Growth Marketing", location: "United Kingdom", industry: "Technology", event: "Twilight City — Thinkies World", status: "REGISTERED", engagement: 78, tags: [], color: "hsl(152, 55%, 45%)", crmSource: "hubspot", crmStage: "MQL", crmDealValue: "$22,000", crmLastSync: "Jun 08, 2026", crmLeadScore: 71 },
+  { initials: "E", name: "Eugenia · Tech Support", email: "eug@spatial.chat", company: "Microsoft", role: "Product Manager", location: "Germany", industry: "SaaS", event: "Cecil's Virtual Lounge", status: "CHECKED IN", engagement: 85, tags: ["Speaker"], color: "hsl(38, 92%, 50%)", crmSource: "hubspot", crmStage: "Opportunity", crmDealValue: "$60,000", crmLastSync: "May 30, 2026", crmLeadScore: 80 },
+  { initials: "PI", name: "Pritina Irvin", email: "pritina@pomona.edu", company: "Stripe", role: "CEO", location: "Canada", industry: "FinTech", event: "Cecil's Virtual Lounge", status: "REGISTERED", engagement: 90, tags: ["VIP"], color: "hsl(270, 55%, 55%)", crmSource: "salesforce", crmStage: "Opportunity", crmDealValue: "$120,000", crmLastSync: "May 24, 2026", crmLeadScore: 88 },
+  { initials: "DT", name: "Doe Thomas", email: "doe@pomona.edu", company: "Notion", role: "Founder", location: "India", industry: "SaaS", event: "Cecil's Virtual Lounge", status: "REGISTERED", engagement: 60, tags: [], color: "hsl(0, 0%, 30%)", crmSource: "hubspot", crmStage: "MQL", crmDealValue: "$8,000", crmLastSync: "May 18, 2026", crmLeadScore: 55 },
+  { initials: "AL", name: "Ana Livia", email: "ana@spatial.chat", company: "Figma", role: "Software Engineer", location: "Australia", industry: "Design", event: "Twilight City — Thinkies World", status: "CHECKED IN", engagement: 81, tags: ["Speaker"], color: "hsl(195, 65%, 45%)", crmSource: "salesforce", crmStage: "SQL", crmDealValue: "$30,000", crmLastSync: "May 11, 2026", crmLeadScore: 70 },
+  { initials: "DL", name: "Diana Larse", email: "diana@dianalarsen.com", company: "Linear", role: "CFO", location: "Singapore", industry: "SaaS", event: "Cecil's Virtual Lounge", status: "REGISTERED", engagement: 73, tags: ["VIP"], color: "hsl(16, 100%, 50%)", crmSource: "hubspot", crmStage: "Customer", crmDealValue: "$95,000", crmLastSync: "Apr 28, 2026", crmLeadScore: 86 },
+  { initials: "AT", name: "Alex Thurow", email: "info@onmoderndev.de", company: "Apple", role: "Finance Manager", location: "United States", industry: "Technology", event: "Twilight City — Thinkies World", status: "REGISTERED", engagement: 67, tags: [], color: "hsl(0, 72%, 55%)", crmSource: "salesforce", crmStage: "MQL", crmDealValue: "$18,000", crmLastSync: "Jun 12, 2026", crmLeadScore: 62 },
 ];
 
 export const crmJourneyData: Record<string, { date: string; action: string; source: string; detail: string; type: "event" | "crm" | "email" | "deal" | "meeting" | "score" }[]> = {

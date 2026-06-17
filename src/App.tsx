@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import Index from "./pages/Index";
 import Events from "./pages/Events";
+import MySpaces from "./pages/MySpaces";
 import Registration from "./pages/Registration";
 import People from "./pages/People";
 import Engagement from "./pages/Engagement";
@@ -32,6 +33,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/my-spaces" element={<MySpaces />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/people" element={<People />} />
             <Route path="/engagement" element={<Engagement />} />
