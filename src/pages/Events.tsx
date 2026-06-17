@@ -31,7 +31,7 @@ const Events = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Events</h1>
-          <p className="text-sm text-muted-foreground">Manage all your webinars, conferences, and meetings</p>
+          <p className="text-sm text-muted-foreground">Every event hosted in your SpatialChat spaces</p>
         </div>
         <Button className="gap-2" onClick={() => setCreateOpen(true)}>
           <Plus className="h-4 w-4" /> Create New Event
