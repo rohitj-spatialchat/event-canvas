@@ -92,9 +92,8 @@ export function AppSidebar() {
                     >
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
-                      {item.soon && (
-                        <span className="ml-auto text-[10px] font-semibold text-warning">SOON</span>
-                      )}
+
+
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
