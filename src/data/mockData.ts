@@ -20,9 +20,9 @@ export const recentActivity = [
 ];
 
 // ===== EVENTS PAGE DATA =====
-export const eventsData = [
-  { id: "1", name: "Twilight City — Thinkies World", type: "Thinkies World Congress", date: "May 20, 2026", status: "ended" as const, registrations: 83, capacity: 100, revenue: "-" },
-  { id: "2", name: "Cecil's Virtual Lounge", type: "CecilsVirtualLounge", date: "Apr 17, 2026", status: "ended" as const, registrations: 24, capacity: 30, revenue: "-" },
+export const eventsData: { id: string; name: string; type: string; date: string; status: "live" | "scheduled" | "draft" | "ended"; registrations: number; capacity: number; revenue: string }[] = [
+  { id: "1", name: "Twilight City — Thinkies World", type: "Thinkies World Congress", date: "May 20, 2026", status: "ended", registrations: 83, capacity: 100, revenue: "-" },
+  { id: "2", name: "Cecil's Virtual Lounge", type: "CecilsVirtualLounge", date: "Apr 17, 2026", status: "ended", registrations: 24, capacity: 30, revenue: "-" },
 ];
 
 // ===== REGISTRATION PAGE DATA =====
