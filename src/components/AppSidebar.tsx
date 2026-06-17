@@ -9,7 +9,6 @@ import {
   Video,
   Users2,
   Globe,
-  Plug,
   Settings,
   ChevronLeft,
   ChevronRight,
@@ -20,7 +19,10 @@ import {
   Flag,
   ArrowUpRight,
   CreditCard,
+  LayoutGrid,
+  Code2,
 } from "lucide-react";
+
 import { NavLink } from "@/components/NavLink";
 import { SpatialChatLogo } from "@/components/SpatialChatLogo";
 import {
@@ -42,7 +44,7 @@ import { Badge } from "@/components/ui/badge";
 
 const navItems = [
   { title: "Home", url: "/", icon: Home },
-  { title: "My Spaces", url: "/my-spaces", icon: Globe },
+  { title: "My Spaces", url: "/my-spaces", icon: LayoutGrid },
   { title: "Events", url: "/events", icon: CalendarDays },
   { title: "Registration", url: "/registration", icon: ClipboardList },
   { title: "People", url: "/people", icon: Users },
@@ -53,10 +55,11 @@ const navItems = [
   { title: "Networking", url: "/networking", icon: Users2 },
   { title: "Community", url: "/community", icon: Globe },
   { title: "AI Agent", url: "/ai-assistant", icon: Bot },
-  { title: "Integrations", url: "/integrations", icon: Plug, soon: true },
+  { title: "Integrations", url: "/integrations", icon: Code2 },
   { title: "Billing", url: "/billing", icon: CreditCard },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
+
 
 const supportLinks = [
   { label: "Developer Community", desc: "Technical discussions", icon: Users2, href: "#", external: true },
@@ -89,9 +92,8 @@ export function AppSidebar() {
                     >
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
-                      {item.soon && (
-                        <span className="ml-auto text-[10px] font-semibold text-warning">SOON</span>
-                      )}
+
+
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
