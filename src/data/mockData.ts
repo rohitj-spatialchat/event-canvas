@@ -21,13 +21,8 @@ export const recentActivity = [
 
 // ===== EVENTS PAGE DATA =====
 export const eventsData = [
-  { id: "1", name: "Product Launch Webinar", type: "Webinar", date: "Feb 18, 2026", status: "live" as const, registrations: 312, capacity: 500, revenue: "$2,450" },
-  { id: "2", name: "Q1 Team All-Hands", type: "Internal", date: "Feb 22, 2026", status: "scheduled" as const, registrations: 156, capacity: 200, revenue: "-" },
-  { id: "3", name: "Customer Success Summit", type: "Conference", date: "Feb 25, 2026", status: "scheduled" as const, registrations: 412, capacity: 1000, revenue: "$8,900" },
-  { id: "4", name: "Tech Talk Series: AI Trends", type: "Webinar", date: "Mar 1, 2026", status: "draft" as const, registrations: 0, capacity: 300, revenue: "-" },
-  { id: "5", name: "Quarterly Business Review", type: "Internal", date: "Jan 15, 2026", status: "ended" as const, registrations: 45, capacity: 50, revenue: "-" },
-  { id: "6", name: "Design System Workshop", type: "Workshop", date: "Mar 10, 2026", status: "scheduled" as const, registrations: 12, capacity: 50, revenue: "$1,200" },
-  { id: "7", name: "Marketing Strategy 2026", type: "Meeting", date: "Mar 15, 2026", status: "draft" as const, registrations: 0, capacity: 100, revenue: "-" },
+  { id: "1", name: "Twilight City — Thinkies World", type: "Thinkies World Congress", date: "May 20, 2026", status: "ended" as const, registrations: 83, capacity: 100, revenue: "-" },
+  { id: "2", name: "Cecil's Virtual Lounge", type: "CecilsVirtualLounge", date: "Apr 17, 2026", status: "ended" as const, registrations: 24, capacity: 30, revenue: "-" },
 ];
 
 // ===== REGISTRATION PAGE DATA =====
