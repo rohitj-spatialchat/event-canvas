@@ -1,131 +1,89 @@
 import { useState } from "react";
-import { Plus, Search, Pencil, Settings } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Plus, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { eventsData } from "@/data/mockData";
 import { CreateEventDialog } from "@/components/CreateEventDialog";
 
-const statusStyles = {
-  live: { label: "● Live", className: "text-success" },
-  scheduled: { label: "Scheduled", className: "text-primary" },
-  draft: { label: "Draft", className: "text-muted-foreground" },
-  ended: { label: "Ended", className: "text-muted-foreground" },
-};
+const events = [
+  {
+    title: "Twilight City — Thinkies World",
+    date: "May 20, 2026",
+    space: "Twilight City",
+    community: "Thinkies World Congress",
+    status: "Ended",
+    attendees: 83,
+    peak: 68,
+    dwell: "134.1m",
+    rooms: 13,
+    gradient: "linear-gradient(135deg, hsl(235, 65%, 55%), hsl(270, 70%, 60%))",
+  },
+  {
+    title: "Cecil's Virtual Lounge",
+    date: "Apr 17, 2026",
+    space: "Pomona College",
+    community: "CecilsVirtualLounge",
+    status: "Ended",
+    attendees: 24,
+    peak: 20,
+    dwell: "62.9m",
+    rooms: 10,
+    gradient: "linear-gradient(135deg, hsl(152, 60%, 38%), hsl(160, 70%, 50%))",
+  },
+];
 
 const Events = () => {
-  const [filter, setFilter] = useState<string>("all");
   const [createOpen, setCreateOpen] = useState(false);
-  const filters = [
-    { key: "all", label: "All", count: eventsData.length },
-    { key: "live", label: "Live", count: eventsData.filter(e => e.status === "live").length },
-    { key: "scheduled", label: "Scheduled", count: eventsData.filter(e => e.status === "scheduled").length },
-    { key: "draft", label: "Draft", count: eventsData.filter(e => e.status === "draft").length },
-    { key: "ended", label: "Ended", count: eventsData.filter(e => e.status === "ended").length },
-  ];
-
-  const filtered = filter === "all" ? eventsData : eventsData.filter(e => e.status === filter);
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Events</h1>
-          <p className="text-sm text-muted-foreground">Every event hosted in your SpatialChat spaces</p>
+          <h1 className="text-3xl font-bold tracking-tight">Events</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Every event hosted in your SpatialChat spaces</p>
         </div>
         <Button className="gap-2" onClick={() => setCreateOpen(true)}>
-          <Plus className="h-4 w-4" /> Create New Event
+          <Plus className="h-4 w-4" /> Create Event
         </Button>
       </div>
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          {filters.map(f => (
-            <button
-              key={f.key}
-              onClick={() => setFilter(f.key)}
-              className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
-                filter === f.key
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              {f.label} <span className="text-xs">{f.count}</span>
-            </button>
-          ))}
-        </div>
-        <div className="relative">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search events..."
-            className="h-9 rounded-md border border-input bg-background pl-9 pr-3 text-sm outline-none focus:ring-2 focus:ring-ring"
-          />
-        </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        {events.map((e) => (
+          <div key={e.title} className="overflow-hidden rounded-2xl bg-card shadow-sm">
+            <div className="relative p-6 pb-10 text-white" style={{ background: e.gradient }}>
+              <span className="absolute right-5 top-5 rounded-full bg-white/20 px-3 py-1 text-xs font-medium backdrop-blur">
+                {e.status}
+              </span>
+              <h3 className="mt-12 text-xl font-semibold">{e.title}</h3>
+            </div>
+            <div className="space-y-4 p-6">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Calendar className="h-4 w-4" />
+                <span>{e.date}</span>
+                <span>·</span>
+                <span>{e.space}</span>
+                <span>·</span>
+                <span>{e.community}</span>
+              </div>
+              <div className="grid grid-cols-4 gap-3">
+                <Stat label="Attendees" value={e.attendees} />
+                <Stat label="Peak" value={e.peak} />
+                <Stat label="Avg dwell" value={e.dwell} />
+                <Stat label="Rooms" value={e.rooms} />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-
-      <Card>
-        <CardContent className="p-0">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border text-left text-xs font-medium uppercase text-muted-foreground">
-                <th className="p-4">Event Name</th>
-                <th className="p-4">Date</th>
-                <th className="p-4">Status</th>
-                <th className="p-4">Registrations</th>
-                <th className="p-4">Capacity</th>
-                <th className="p-4">Revenue</th>
-                <th className="p-4">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map(event => {
-                const style = statusStyles[event.status];
-                const fillPercent = event.capacity > 0 ? (event.registrations / event.capacity) * 100 : 0;
-                return (
-                  <tr key={event.id} className="border-b border-border last:border-0">
-                    <td className="p-4">
-                      <p className="font-medium">{event.name}</p>
-                      <p className="text-xs text-muted-foreground">{event.type}</p>
-                    </td>
-                    <td className="p-4 text-sm">{event.date}</td>
-                    <td className="p-4">
-                      <span className={`text-sm font-medium ${style.className}`}>{style.label}</span>
-                    </td>
-                    <td className="p-4">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm">{event.registrations}</span>
-                        <div className="h-1.5 w-20 rounded-full bg-muted">
-                          <div
-                            className="h-full rounded-full bg-primary"
-                            style={{ width: `${Math.min(fillPercent, 100)}%` }}
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4 text-sm">{event.capacity}</td>
-                    <td className="p-4 text-sm">{event.revenue}</td>
-                    <td className="p-4">
-                      <div className="flex items-center gap-2">
-                        <button className="text-muted-foreground hover:text-foreground">
-                          <Pencil className="h-4 w-4" />
-                        </button>
-                        <button className="text-muted-foreground hover:text-foreground">
-                          <Settings className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </CardContent>
-      </Card>
 
       <CreateEventDialog open={createOpen} onOpenChange={setCreateOpen} />
     </div>
   );
 };
+
+const Stat = ({ label, value }: { label: string; value: string | number }) => (
+  <div>
+    <p className="text-2xl font-bold">{value}</p>
+    <p className="text-xs text-muted-foreground">{label}</p>
+  </div>
+);
 
 export default Events;
