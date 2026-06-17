@@ -42,6 +42,7 @@ import { Badge } from "@/components/ui/badge";
 
 const navItems = [
   { title: "Home", url: "/", icon: Home },
+  { title: "My Spaces", url: "/my-spaces", icon: Globe },
   { title: "Events", url: "/events", icon: CalendarDays },
   { title: "Registration", url: "/registration", icon: ClipboardList },
   { title: "People", url: "/people", icon: Users },
@@ -51,7 +52,7 @@ const navItems = [
   { title: "Recordings", url: "/recordings", icon: Video },
   { title: "Networking", url: "/networking", icon: Users2 },
   { title: "Community", url: "/community", icon: Globe },
-  { title: "AI Assistant", url: "/ai-assistant", icon: Bot },
+  { title: "AI Agent", url: "/ai-assistant", icon: Bot },
   { title: "Integrations", url: "/integrations", icon: Plug, soon: true },
   { title: "Billing", url: "/billing", icon: CreditCard },
   { title: "Settings", url: "/settings", icon: Settings },
